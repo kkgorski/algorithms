@@ -24,6 +24,9 @@ public:
     head_ = newItem;
     size_++;
   }
+  TYPE front(){
+    return 0;
+  }
 
 private:
   Node* head_;
@@ -36,13 +39,14 @@ TEST_CASE("Items can be added to linkedList", "[prepend]") {
     LinkedList<int> linkedList;
     REQUIRE(linkedList.size() == 0);
 
-    WHEN("An element is prepended"){
+    WHEN("int 2 is prepended"){
 
       linkedList.prepend(2);
 
-      THEN("List size is increased"){
+      THEN("List size is 1 and front returns 2"){
 
         REQUIRE(linkedList.size() == 1);
+        REQUIRE(linkedList.front() == 2);
       }
     }
   }

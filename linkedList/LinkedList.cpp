@@ -7,3 +7,21 @@ class LinkedList
 {
 };
 
+TEST_CASE("Items can be added to linkedList", "[prepend]") {
+  GIVEN("An empty int list"){
+
+    LinkedList<int> linkedList;
+    REQUIRE(linkedList.size() == 0);
+
+    WHEN("An element is prepended"){
+
+      linkedList.prepend(2);
+
+      THEN("List size is increased"){
+
+        REQUIRE(linkedList.size() == 1);
+      }
+    }
+  }
+}
+

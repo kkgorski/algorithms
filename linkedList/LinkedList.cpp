@@ -5,6 +5,29 @@
 template<typename TYPE>
 class LinkedList
 {
+  class Node{
+  public:
+    Node(TYPE data, Node* next) : data_(data), next_(next) {}
+
+  private:
+    TYPE data_;
+    Node* next_;
+  };
+
+public:
+  LinkedList() : head_(NULL), size_(0) {}
+  unsigned size(){
+    return size_;
+  }
+  void prepend(TYPE item){
+    Node* newItem = new Node(item, head_);
+    head_ = newItem;
+    size_++;
+  }
+
+private:
+  Node* head_;
+  unsigned size_;
 };
 
 TEST_CASE("Items can be added to linkedList", "[prepend]") {

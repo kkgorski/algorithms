@@ -8,6 +8,9 @@ class LinkedList
   class Node{
   public:
     Node(TYPE data, Node* next) : data_(data), next_(next) {}
+    TYPE data(){
+      return data_;
+    }
 
   private:
     TYPE data_;
@@ -25,7 +28,7 @@ public:
     size_++;
   }
   TYPE front(){
-    return 0;
+    return head_->data();
   }
 
 private:

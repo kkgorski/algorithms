@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <array>
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include <catch2/catch.hpp>
 #include <utils.hpp>
@@ -48,6 +49,10 @@ public:
   TYPE front() const{
     return head_->data();
   }
+  bool operator==(const LinkedList& linkedList) const{
+    (void) linkedList;
+    return false;
+  }
 
 private:
   Node* head_;
@@ -95,7 +100,7 @@ TEST_CASE("Items can be removed from linkedList", "[removeFirst]") {
   }
 }
 
-TEST_CASE("LinkedList can be constructed from iterator", "[constructor]") {
+TEST_CASE("LinkedList can be constructed from vector", "[constructor]") {
   GIVEN("An vector (1,2,3)"){
 
     std::vector<int> vector = {1,2,3};
@@ -113,3 +118,38 @@ TEST_CASE("LinkedList can be constructed from iterator", "[constructor]") {
   }
 }
 
+TEST_CASE("LinkedList can be constructed from array", "[constructor]") {
+  GIVEN("An array (1,2,3)"){
+
+    std::array<int,3> array = {1,2,3};
+
+    WHEN("LinedList is created"){
+
+      LinkedList<int> linkedList(array);
+
+      THEN("List size is 3 and front returns 1"){
+
+        REQUIRE(linkedList.size() == 3);
+        REQUIRE(linkedList.front() == 1);
+      }
+    }
+  }
+}
+
+TEST_CASE("LinkedList can be compared", "[operator==]") {
+  GIVEN("Two identical empty int lists"){
+
+    LinkedList<int> linkedList;
+    LinkedList<int> linkedList2;
+    REQUIRE(linkedList.size() == 0);
+    REQUIRE(linkedList2.size() == 0);
+
+    WHEN("They are compared"){
+
+      THEN("Result is true"){
+
+        REQUIRE(linkedList == linkedList2);
+      }
+    }
+  }
+}

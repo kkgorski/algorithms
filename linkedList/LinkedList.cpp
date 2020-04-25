@@ -8,7 +8,7 @@ class LinkedList
   class Node{
   public:
     Node(TYPE data, Node* next) : data_(data), next_(next) {}
-    TYPE data(){
+    TYPE data() const{
       return data_;
     }
 
@@ -19,7 +19,7 @@ class LinkedList
 
 public:
   LinkedList() : head_(NULL), size_(0) {}
-  unsigned size(){
+  unsigned size() const{
     return size_;
   }
   void prepend(TYPE item){
@@ -27,7 +27,7 @@ public:
     head_ = newItem;
     size_++;
   }
-  TYPE front(){
+  TYPE front() const{
     return head_->data();
   }
 

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include <catch2/catch.hpp>
 
@@ -22,6 +23,11 @@ class LinkedList
 
 public:
   LinkedList() : head_(NULL), size_(0) {}
+  template<typename iteratorType>
+  LinkedList(iteratorType iterator) : head_(NULL), size_(0)
+  {
+    (void) iterator;
+  }
   unsigned size() const{
     return size_;
   }
@@ -85,3 +91,22 @@ TEST_CASE("Items can be removed from linkedList", "[removeFirst]") {
     }
   }
 }
+
+TEST_CASE("LinkedList can be constructed from iterator", "[constructor]") {
+  GIVEN("An vector (1,2,3)"){
+
+    std::vector<int> vector = {1,2,3};
+
+    WHEN("LinedList is created"){
+
+      LinkedList<int> linkedList(vector);
+
+      THEN("List size is 3 and front returns 1"){
+
+        REQUIRE(linkedList.size() == 3);
+        REQUIRE(linkedList.front() == 1);
+      }
+    }
+  }
+}
+

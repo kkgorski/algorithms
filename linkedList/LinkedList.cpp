@@ -11,6 +11,9 @@ class LinkedList
     TYPE data() const{
       return data_;
     }
+    Node* next() const{
+      return next_;
+    }
 
   private:
     TYPE data_;
@@ -28,6 +31,10 @@ public:
     size_++;
   }
   void removeFirst(){
+    Node* headCopy = head_;
+    head_ = head_->next();
+    delete headCopy;
+    size_--;
   }
   TYPE front() const{
     return head_->data();

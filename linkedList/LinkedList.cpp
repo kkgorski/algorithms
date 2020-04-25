@@ -2,6 +2,7 @@
 #include <vector>
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include <catch2/catch.hpp>
+#include <utils.hpp>
 
 template<typename TYPE>
 class LinkedList
@@ -23,10 +24,12 @@ class LinkedList
 
 public:
   LinkedList() : head_(NULL), size_(0) {}
-  template<typename iteratorType>
-  LinkedList(iteratorType iterator) : head_(NULL), size_(0)
+  template<typename T>
+  LinkedList(T iterable) : head_(NULL), size_(0)
   {
-    (void) iterator;
+    for (auto value : reverse(iterable)) {
+      prepend(value);
+    }
   }
   unsigned size() const{
     return size_;

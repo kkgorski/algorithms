@@ -27,6 +27,8 @@ public:
     head_ = newItem;
     size_++;
   }
+  void removeFirst(){
+  }
   TYPE front() const{
     return head_->data();
   }
@@ -55,3 +57,24 @@ TEST_CASE("Items can be added to linkedList", "[prepend]") {
   }
 }
 
+TEST_CASE("Items can be removed from linkedList", "[removeFirst]") {
+  GIVEN("An int list [3,4]"){
+
+    LinkedList<int> linkedList;
+    linkedList.prepend(4);
+    linkedList.prepend(3);
+    REQUIRE(linkedList.size() == 2);
+    REQUIRE(linkedList.front() == 3);
+
+    WHEN("first element is removed"){
+
+      linkedList.removeFirst();
+
+      THEN("List size is 1 and front returns 2"){
+
+        REQUIRE(linkedList.size() == 1);
+        REQUIRE(linkedList.front() == 4);
+      }
+    }
+  }
+}

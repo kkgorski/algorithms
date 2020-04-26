@@ -49,9 +49,22 @@ public:
   TYPE front() const{
     return head_->data();
   }
-  bool operator==(const LinkedList& linkedList) const{
-    (void) linkedList;
-    return false;
+  bool operator==(const LinkedList& other) const{
+    if(size_ != other.size_){
+      return false;
+    }
+    Node* currentNode = head_;
+    Node* otherCurrentNode = other.head_;
+
+    while(currentNode){
+      if(currentNode->data() != otherCurrentNode->data()){
+        return false;
+      }
+      currentNode = currentNode->next();
+      otherCurrentNode = otherCurrentNode->next();
+    }
+
+    return true;
   }
 
 private:
@@ -147,8 +160,38 @@ TEST_CASE("LinkedList can be compared", "[operator==]") {
     WHEN("They are compared"){
 
       THEN("Result is true"){
-
         REQUIRE(linkedList == linkedList2);
+      }
+    }
+  }
+  GIVEN("Two identical int lists [1,2,3]"){
+
+    std::array<int,3> array = {1,2,3};
+    LinkedList<int> linkedList(array);
+    LinkedList<int> linkedList2(array);
+    REQUIRE(linkedList.size() == 3);
+    REQUIRE(linkedList2.size() == 3);
+
+    WHEN("They are compared"){
+
+      THEN("Result is true"){
+        REQUIRE(linkedList == linkedList2);
+      }
+    }
+  }
+  GIVEN("Two different int lists [1,2,{3 or 5}]"){
+
+    std::array<int,3> array = {1,2,3};
+    std::array<int,3> array2 = {1,2,5};
+    LinkedList<int> linkedList(array);
+    LinkedList<int> linkedList2(array2);
+    REQUIRE(linkedList.size() == 3);
+    REQUIRE(linkedList2.size() == 3);
+
+    WHEN("They are compared"){
+
+      THEN("Result is true"){
+        REQUIRE_FALSE(linkedList == linkedList2);
       }
     }
   }

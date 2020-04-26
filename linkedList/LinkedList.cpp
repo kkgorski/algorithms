@@ -49,6 +49,9 @@ public:
   TYPE front() const{
     return head_->data();
   }
+  LinkedList reverse() const{
+    return *this;
+  }
   bool operator==(const LinkedList& other) const{
     if(size_ != other.size_){
       return false;
@@ -192,6 +195,29 @@ TEST_CASE("LinkedList can be compared", "[operator==]") {
 
       THEN("Result is true"){
         REQUIRE_FALSE(linkedList == linkedList2);
+      }
+    }
+  }
+}
+
+
+TEST_CASE("LinkedList can be reversed", "[reverse]") {
+  GIVEN("An list(1,2,3)"){
+
+    std::array<int,3> array = {1,2,3};
+    LinkedList<int> linkedList(array);
+    REQUIRE(linkedList.size() == 3);
+
+    WHEN("LinkedList is reversed"){
+
+      LinkedList<int> reversedLinkedList = linkedList.reverse();
+
+      THEN("The result is a list(3,2,1)"){
+
+        std::array<int,3> array = {3,2,1};
+        LinkedList<int> expectedList(array);
+        REQUIRE(reversedLinkedList.size() == 3);
+        REQUIRE(reversedLinkedList == expectedList);
       }
     }
   }

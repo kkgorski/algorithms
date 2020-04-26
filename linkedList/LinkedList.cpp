@@ -28,7 +28,7 @@ public:
   template<typename T>
   LinkedList(T iterable) : head_(NULL), size_(0)
   {
-    for (auto value : reverse(iterable)) {
+    for (auto value : reverse_wrap(iterable)) {
       prepend(value);
     }
   }

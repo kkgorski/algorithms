@@ -50,7 +50,13 @@ public:
     return head_->data();
   }
   LinkedList reverse() const{
-    return *this;
+    LinkedList list;
+    Node* currentNode = head_;
+    while(currentNode){
+      list.prepend(currentNode->data());
+      currentNode = currentNode->next();
+    }
+    return list;
   }
   bool operator==(const LinkedList& other) const{
     if(size_ != other.size_){

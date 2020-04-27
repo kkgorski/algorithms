@@ -32,6 +32,15 @@ public:
       prepend(value);
     }
   }
+  ~LinkedList()
+  {
+    Node* nextNode;
+    while(head_){
+      nextNode = head_->next();
+      delete head_;
+      head_ = nextNode;
+    }
+  }
   unsigned size() const{
     return size_;
   }

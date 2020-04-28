@@ -200,6 +200,27 @@ TEST_CASE("ConstructorCounter", "[all]") {
     }
   }
 
+  GIVEN("ConstructorCounter object"){
+
+    ConstructorCounter ctr;
+    resetConstructorCounters();
+
+    WHEN("new ConstructorCounter object is made from moved previous one"){
+
+      ConstructorCounter ctr2 = std::move(ctr);
+
+      THEN("move constructor is called once"){
+
+        REQUIRE(defaultConstructorCalled == 0);
+        REQUIRE(copyConstructorCalled == 0);
+        REQUIRE(moveConstructorCalled == 1);
+        REQUIRE(copyAssignmentOperatorCalled == 0);
+        REQUIRE(moveAssignmentOperatorCalled == 0);
+        REQUIRE(defaultDestructorCalled == 0);
+      }
+    }
+  }
+
   GIVEN("Two ConstructorCounter objects"){
 
     ConstructorCounter ctr;

@@ -4,7 +4,7 @@ class LinkedList
   class Node{
   public:
     Node(TYPE&& data, Node* next) : data_(std::move(data)), next_(next) {}
-    const TYPE& data() const{
+    TYPE& data(){
       return data_;
     }
     Node* next() const{
@@ -53,7 +53,7 @@ public:
     delete headCopy;
     size_--;
   }
-  TYPE front() const{
+  TYPE& front() const{
     return head_->data();
   }
   LinkedList reverse() const{

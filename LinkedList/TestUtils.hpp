@@ -40,7 +40,7 @@ public:
   }
   //destructor
   ~ConstructorCounter(){
-    defaultConstructorCalled++;
+    defaultDestructorCalled++;
   }
 };
 

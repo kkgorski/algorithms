@@ -1,11 +1,10 @@
-
 template<typename TYPE>
 class LinkedList
 {
   class Node{
   public:
-    Node(TYPE data, Node* next) : data_(data), next_(next) {}
-    TYPE data() const{
+    Node(TYPE&& data, Node* next) : data_(std::move(data)), next_(next) {}
+    const TYPE& data() const{
       return data_;
     }
     Node* next() const{
@@ -39,7 +38,12 @@ public:
     return size_;
   }
   void prepend(TYPE item){
-    Node* newItem = new Node(item, head_);
+    Node* newItem = new Node(std::move(item), head_);
+    head_ = newItem;
+    size_++;
+  }
+  void emplaceFront(TYPE&& item){
+    Node* newItem = new Node(std::move(item), head_);
     head_ = newItem;
     size_++;
   }

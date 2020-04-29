@@ -45,9 +45,9 @@ public:
 };
 
 struct incrementBy{
-  incrementBy(unsigned addend) : addend_(addend){}
-  void operator()(unsigned& number){
+  incrementBy(int addend) : addend_(addend){}
+  void operator()(int& number){
     ++number;
   }
-  unsigned addend_;
+  int addend_;
 };

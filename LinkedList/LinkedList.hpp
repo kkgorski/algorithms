@@ -85,7 +85,11 @@ public:
   template<typename functionType>
   void forEach(functionType function)
   {
-    (void) function;
+    Node* currentNode = head_;
+    while(currentNode){
+      function(currentNode->data());
+      currentNode = currentNode->next();
+    }
   }
 
 private:

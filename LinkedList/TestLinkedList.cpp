@@ -168,7 +168,7 @@ TEST_CASE("LinkedList can be iterated", "[forEach]") {
 
       THEN("The result is a list(2,3,4)"){
 
-        std::array<int,3> array = {3,2,1};
+        std::array<int,3> array = {2,3,4};
         LinkedList<int> expectedList(array);
         REQUIRE(linkedList.size() == 3);
         REQUIRE(linkedList == expectedList);
@@ -176,6 +176,7 @@ TEST_CASE("LinkedList can be iterated", "[forEach]") {
     }
   }
 }
+
 // This may seem irrelevant to linkedList but I wanted to have one test binary, at least for now
 // It will be needed for next UTs
 // TODO move to some general test utils

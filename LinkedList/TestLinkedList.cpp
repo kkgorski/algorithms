@@ -266,3 +266,28 @@ TEST_CASE("ConstructorCounter", "[all]") {
   }
 }
 
+TEST_CASE("Items are moved to linkedList", "[emplaceFront]") {
+  GIVEN("An empty ConstructorCounter list"){
+
+    resetConstructorCounters();
+    LinkedList<ConstructorCounter> linkedList;
+    REQUIRE(linkedList.size() == 0);
+
+    WHEN("An rvalue object is prepended"){
+
+      linkedList.emplaceFront(std::move(ConstructorCounter()));
+
+      THEN("List size is 1 and move constructor is called once"){
+
+        REQUIRE(linkedList.size() == 1);
+        REQUIRE(defaultConstructorCalled == 1);
+        REQUIRE(copyConstructorCalled == 0);
+        REQUIRE(moveConstructorCalled == 1);
+        REQUIRE(copyAssignmentOperatorCalled == 0);
+        REQUIRE(moveAssignmentOperatorCalled == 0);
+        REQUIRE(defaultDestructorCalled == 1);
+      }
+    }
+  }
+}
+

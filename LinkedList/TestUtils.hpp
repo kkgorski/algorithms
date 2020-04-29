@@ -44,3 +44,10 @@ public:
   }
 };
 
+struct incrementBy{
+  incrementBy(unsigned addend) : addend_(addend){}
+  void operator()(unsigned& number){
+    ++number;
+  }
+  unsigned addend_;
+};

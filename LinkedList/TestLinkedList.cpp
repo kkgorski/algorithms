@@ -155,6 +155,27 @@ TEST_CASE("LinkedList can be reversed", "[reverse]") {
   }
 }
 
+TEST_CASE("LinkedList can be iterated", "[forEach]") {
+  GIVEN("An list(1,2,3)"){
+
+    std::array<int,3> array = {1,2,3};
+    LinkedList<int> linkedList(array);
+    REQUIRE(linkedList.size() == 3);
+
+    WHEN("For each element incrementByOne function is called"){
+
+      linkedList.forEach(incrementBy(2));
+
+      THEN("The result is a list(2,3,4)"){
+
+        std::array<int,3> array = {3,2,1};
+        LinkedList<int> expectedList(array);
+        REQUIRE(linkedList.size() == 3);
+        REQUIRE(linkedList == expectedList);
+      }
+    }
+  }
+}
 // This may seem irrelevant to linkedList but I wanted to have one test binary, at least for now
 // It will be needed for next UTs
 // TODO move to some general test utils

@@ -82,6 +82,11 @@ public:
 
     return true;
   }
+  template<typename functionType>
+  void forEach(functionType function)
+  {
+    (void) function;
+  }
 
 private:
   Node* head_;

@@ -313,3 +313,28 @@ TEST_CASE("Items are moved to linkedList", "[emplaceFront]") {
   }
 }
 
+TEST_CASE("It is possible to iterate through linkedList", "[begin, end]") {
+  GIVEN("An int list (1,2,3)"){
+
+    std::array<int,3> array = {1,2,3};
+    LinkedList<int> linkedList(array);
+    REQUIRE(linkedList.size() == 3);
+
+    WHEN("Vector is constructed from linkedList values during for loop"){
+
+      std::vector<int> result = {};
+
+      for(auto it : linkedList)
+      {
+        result.emplace_back(it);
+      }
+
+      THEN("Resulting vector is 1,2,3"){
+
+        std::vector<int> expectedVector = {1,2,3};
+        REQUIRE(result == expectedVector);
+
+      }
+    }
+  }
+}

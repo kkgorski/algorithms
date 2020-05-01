@@ -15,8 +15,29 @@ class LinkedList
     TYPE data_;
     Node* next_;
   };
-
 public:
+  class Iterator{
+    public:
+    explicit Iterator() {}
+    Iterator& operator++(){
+      return *this;
+    }
+    Iterator operator++() const{
+      return Iterator();
+    }
+    bool operator==(Iterator other) const{
+      (void) other;
+      return false;
+    }
+    bool operator!=(Iterator other) const{
+      (void) other;
+      return false;
+    }
+    TYPE operator*() const{
+      return TYPE();
+    }
+  };
+
   LinkedList() : head_(NULL), size_(0) {}
   template<typename T>
   LinkedList(T iterable) : head_(NULL), size_(0)
@@ -90,6 +111,12 @@ public:
       function(currentNode->data());
       currentNode = currentNode->next();
     }
+  }
+  Iterator begin() const{
+    return Iterator();
+  }
+  Iterator end() const{
+    return Iterator();
   }
 
 private:

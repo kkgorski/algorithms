@@ -313,7 +313,7 @@ TEST_CASE("Items are moved to linkedList", "[emplaceFront]") {
   }
 }
 
-TEST_CASE("It is possible to iterate through linkedList", "[begin, end]") {
+TEST_CASE("It is possible to iterate through linkedList", "[begin, end, Iterator]") {
   GIVEN("An int list (1,2,3)"){
 
     std::array<int,3> array = {1,2,3};
@@ -324,8 +324,7 @@ TEST_CASE("It is possible to iterate through linkedList", "[begin, end]") {
 
       std::vector<int> result = {};
 
-      for(auto it : linkedList)
-      {
+      for(auto it : linkedList){
         result.emplace_back(it);
       }
 
@@ -338,3 +337,28 @@ TEST_CASE("It is possible to iterate through linkedList", "[begin, end]") {
     }
   }
 }
+
+TEST_CASE("It is possible to iterate through linkedList and modify elements", "[begin, end, Iterator]") {
+  GIVEN("An list(1,2,3)"){
+
+    std::array<int,3> array = {1,2,3};
+    LinkedList<int> linkedList(array);
+    REQUIRE(linkedList.size() == 3);
+
+    WHEN("For each element incrementByOne function is called"){
+
+      for(auto& it : linkedList){
+        it++;
+      }
+
+      THEN("The result is a list(2,3,4)"){
+
+        std::array<int,3> array = {2,3,4};
+        LinkedList<int> expectedList(array);
+        REQUIRE(linkedList.size() == 3);
+        REQUIRE(linkedList == expectedList);
+      }
+    }
+  }
+}
+

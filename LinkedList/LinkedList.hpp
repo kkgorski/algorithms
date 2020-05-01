@@ -35,6 +35,9 @@ public:
     TYPE operator*() const{
       return currentNode_->data();
     }
+    TYPE& operator*(){
+      return currentNode_->data();
+    }
   private:
     Node* currentNode_;
   };

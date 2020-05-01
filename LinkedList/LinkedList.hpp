@@ -17,25 +17,26 @@ class LinkedList
   };
 public:
   class Iterator{
-    public:
-    explicit Iterator() {}
+  public:
+    explicit Iterator(Node* currentNode) : currentNode_(currentNode) {}
     Iterator& operator++(){
+      currentNode_ = currentNode_->next();
       return *this;
     }
     Iterator operator++() const{
-      return Iterator();
+      return currentNode_->next();
     }
     bool operator==(Iterator other) const{
-      (void) other;
-      return false;
+      return currentNode_ == other.currentNode_;
     }
     bool operator!=(Iterator other) const{
-      (void) other;
-      return false;
+      return currentNode_ != other.currentNode_;
     }
     TYPE operator*() const{
-      return TYPE();
+      return currentNode_->data();
     }
+  private:
+    Node* currentNode_;
   };
 
   LinkedList() : head_(NULL), size_(0) {}
@@ -113,10 +114,10 @@ public:
     }
   }
   Iterator begin() const{
-    return Iterator();
+    return Iterator(head_);
   }
   Iterator end() const{
-    return Iterator();
+    return Iterator(NULL);
   }
 
 private:

@@ -1,24 +1,12 @@
+#include "Node.hpp"
+
 template<typename TYPE>
 class LinkedList
 {
-  class Node{
-  public:
-    Node(TYPE&& data, Node* next) : data_(std::move(data)), next_(next) {}
-    TYPE& data(){
-      return data_;
-    }
-    Node* next() const{
-      return next_;
-    }
-
-  private:
-    TYPE data_;
-    Node* next_;
-  };
 public:
   class Iterator{
   public:
-    explicit Iterator(Node* currentNode) : currentNode_(currentNode) {}
+    explicit Iterator(Node<TYPE>* currentNode) : currentNode_(currentNode) {}
     Iterator& operator++(){
       currentNode_ = currentNode_->next();
       return *this;
@@ -39,7 +27,7 @@ public:
       return currentNode_->data();
     }
   private:
-    Node* currentNode_;
+    Node<TYPE>* currentNode_;
   };
 
   LinkedList() : head_(NULL), size_(0) {}
@@ -52,7 +40,7 @@ public:
   }
   ~LinkedList()
   {
-    Node* nextNode;
+    Node<TYPE>* nextNode;
     while(head_){
       nextNode = head_->next();
       delete head_;
@@ -63,17 +51,17 @@ public:
     return size_;
   }
   void prepend(TYPE item){
-    Node* newItem = new Node(std::move(item), head_);
+    Node<TYPE>* newItem = new Node<TYPE>(std::move(item), head_);
     head_ = newItem;
     size_++;
   }
   void emplaceFront(TYPE&& item){
-    Node* newItem = new Node(std::move(item), head_);
+    Node<TYPE>* newItem = new Node<TYPE>(std::move(item), head_);
     head_ = newItem;
     size_++;
   }
   void removeFirst(){
-    Node* headCopy = head_;
+    Node<TYPE>* headCopy = head_;
     head_ = head_->next();
     delete headCopy;
     size_--;
@@ -83,7 +71,7 @@ public:
   }
   LinkedList reverse() const{
     LinkedList list;
-    Node* currentNode = head_;
+    Node<TYPE>* currentNode = head_;
     while(currentNode){
       list.prepend(currentNode->data());
       currentNode = currentNode->next();
@@ -94,8 +82,8 @@ public:
     if(size_ != other.size_){
       return false;
     }
-    Node* currentNode = head_;
-    Node* otherCurrentNode = other.head_;
+    Node<TYPE>* currentNode = head_;
+    Node<TYPE>* otherCurrentNode = other.head_;
 
     while(currentNode){
       if(currentNode->data() != otherCurrentNode->data()){
@@ -110,7 +98,7 @@ public:
   template<typename functionType>
   void forEach(functionType function)
   {
-    Node* currentNode = head_;
+    Node<TYPE>* currentNode = head_;
     while(currentNode){
       function(currentNode->data());
       currentNode = currentNode->next();
@@ -124,7 +112,7 @@ public:
   }
 
 private:
-  Node* head_;
+  Node<TYPE>* head_;
   unsigned size_;
 };
 

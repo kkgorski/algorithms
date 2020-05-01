@@ -1,35 +1,10 @@
 #include "Node.hpp"
+#include "Iterator.hpp"
 
 template<typename TYPE>
 class LinkedList
 {
 public:
-  class Iterator{
-  public:
-    explicit Iterator(Node<TYPE>* currentNode) : currentNode_(currentNode) {}
-    Iterator& operator++(){
-      currentNode_ = currentNode_->next();
-      return *this;
-    }
-    Iterator operator++() const{
-      return currentNode_->next();
-    }
-    bool operator==(Iterator other) const{
-      return currentNode_ == other.currentNode_;
-    }
-    bool operator!=(Iterator other) const{
-      return currentNode_ != other.currentNode_;
-    }
-    TYPE operator*() const{
-      return currentNode_->data();
-    }
-    TYPE& operator*(){
-      return currentNode_->data();
-    }
-  private:
-    Node<TYPE>* currentNode_;
-  };
-
   LinkedList() : head_(NULL), size_(0) {}
   template<typename T>
   LinkedList(T iterable) : head_(NULL), size_(0)
@@ -104,11 +79,11 @@ public:
       currentNode = currentNode->next();
     }
   }
-  Iterator begin() const{
-    return Iterator(head_);
+  Iterator<TYPE> begin() const{
+    return Iterator<TYPE>(head_);
   }
-  Iterator end() const{
-    return Iterator(NULL);
+  Iterator<TYPE> end() const{
+    return Iterator<TYPE>(NULL);
   }
 
 private:

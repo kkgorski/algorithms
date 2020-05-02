@@ -25,11 +25,8 @@ public:
   }
   ~LinkedList()
   {
-    Node<TYPE>* nextNode;
-    while(nodes_.head_){
-      nextNode = nodes_.head_->next();
-      delete nodes_.head_;
-      nodes_.head_ = nextNode;
+    for(auto node: nodes_){
+      delete node;
     }
   }
   unsigned size() const{

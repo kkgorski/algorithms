@@ -1,13 +1,20 @@
 template<typename TYPE>
 class Iterator{
 public:
-  explicit Iterator(Node<TYPE>* currentNode) : currentNode_(currentNode) {}
+  explicit Iterator(Node<TYPE>* currentNode) : currentNode_(currentNode){
+    if(currentNode_){
+      nextNode_ = currentNode_->next();
+    }
+  }
   Iterator& operator++(){
-    currentNode_ = currentNode_->next();
+    currentNode_ = nextNode_;
+    if(nextNode_){
+    nextNode_ = nextNode_->next();
+    }
     return *this;
   }
   Iterator operator++() const{
-    return currentNode_->next();
+    return nextNode_;
   }
   bool operator==(Iterator other) const{
     return currentNode_ == other.currentNode_;
@@ -17,6 +24,7 @@ public:
   }
 protected:
   Node<TYPE>* currentNode_;
+  Node<TYPE>* nextNode_;
 };
 
 template<typename TYPE>

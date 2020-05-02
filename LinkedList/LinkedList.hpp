@@ -56,10 +56,8 @@ public:
   }
   LinkedList reverse() const{
     LinkedList list;
-    Node<TYPE>* currentNode = nodes_.head_;
-    while(currentNode){
-      list.prepend(currentNode->data());
-      currentNode = currentNode->next();
+    for (const auto& data : *this){
+      list.prepend(data);
     }
     return list;
   }

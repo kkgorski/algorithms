@@ -67,26 +67,20 @@ public:
     if(size_ != other.size_){
       return false;
     }
-    Node<TYPE>* currentNode = nodes_.head_;
     Node<TYPE>* otherCurrentNode = other.nodes_.head_;
-
-    while(currentNode){
-      if(currentNode->data() != otherCurrentNode->data()){
+    for (const auto& data : *this){
+      if(data != otherCurrentNode->data()){
         return false;
       }
-      currentNode = currentNode->next();
       otherCurrentNode = otherCurrentNode->next();
     }
-
     return true;
   }
   template<typename functionType>
   void forEach(functionType function)
   {
-    Node<TYPE>* currentNode = nodes_.head_;
-    while(currentNode){
-      function(currentNode->data());
-      currentNode = currentNode->next();
+    for(auto node: nodes_){
+      function(node->data());
     }
   }
   DataIterator<TYPE> begin() const{

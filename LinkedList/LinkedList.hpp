@@ -4,10 +4,20 @@
 template<typename TYPE>
 class LinkedList
 {
+  struct Nodes{
+    Nodes(Node<TYPE>* head) : head_(head) {}
+    NodeIterator<TYPE> begin() const{
+      return NodeIterator<TYPE>(head_);
+    }
+    NodeIterator<TYPE> end() const{
+      return NodeIterator<TYPE>(NULL);
+    }
+    Node<TYPE>* head_;
+  };
 public:
-  LinkedList() : head_(NULL), size_(0) {}
+  LinkedList() : nodes_(NULL), size_(0) {}
   template<typename T>
-  LinkedList(T iterable) : head_(NULL), size_(0)
+  LinkedList(T iterable) : nodes_(NULL), size_(0)
   {
     for (auto value : reverse_wrap(iterable)) {
       prepend(value);
@@ -16,37 +26,37 @@ public:
   ~LinkedList()
   {
     Node<TYPE>* nextNode;
-    while(head_){
-      nextNode = head_->next();
-      delete head_;
-      head_ = nextNode;
+    while(nodes_.head_){
+      nextNode = nodes_.head_->next();
+      delete nodes_.head_;
+      nodes_.head_ = nextNode;
     }
   }
   unsigned size() const{
     return size_;
   }
   void prepend(TYPE item){
-    Node<TYPE>* newItem = new Node<TYPE>(std::move(item), head_);
-    head_ = newItem;
+    Node<TYPE>* newItem = new Node<TYPE>(std::move(item), nodes_.head_);
+    nodes_.head_ = newItem;
     size_++;
   }
   void emplaceFront(TYPE&& item){
-    Node<TYPE>* newItem = new Node<TYPE>(std::move(item), head_);
-    head_ = newItem;
+    Node<TYPE>* newItem = new Node<TYPE>(std::move(item), nodes_.head_);
+    nodes_.head_ = newItem;
     size_++;
   }
   void removeFirst(){
-    Node<TYPE>* headCopy = head_;
-    head_ = head_->next();
+    Node<TYPE>* headCopy = nodes_.head_;
+    nodes_.head_ = nodes_.head_->next();
     delete headCopy;
     size_--;
   }
   TYPE& front() const{
-    return head_->data();
+    return nodes_.head_->data();
   }
   LinkedList reverse() const{
     LinkedList list;
-    Node<TYPE>* currentNode = head_;
+    Node<TYPE>* currentNode = nodes_.head_;
     while(currentNode){
       list.prepend(currentNode->data());
       currentNode = currentNode->next();
@@ -57,8 +67,8 @@ public:
     if(size_ != other.size_){
       return false;
     }
-    Node<TYPE>* currentNode = head_;
-    Node<TYPE>* otherCurrentNode = other.head_;
+    Node<TYPE>* currentNode = nodes_.head_;
+    Node<TYPE>* otherCurrentNode = other.nodes_.head_;
 
     while(currentNode){
       if(currentNode->data() != otherCurrentNode->data()){
@@ -73,21 +83,21 @@ public:
   template<typename functionType>
   void forEach(functionType function)
   {
-    Node<TYPE>* currentNode = head_;
+    Node<TYPE>* currentNode = nodes_.head_;
     while(currentNode){
       function(currentNode->data());
       currentNode = currentNode->next();
     }
   }
-  Iterator<TYPE> begin() const{
-    return Iterator<TYPE>(head_);
+  DataIterator<TYPE> begin() const{
+    return DataIterator<TYPE>(nodes_.head_);
   }
-  Iterator<TYPE> end() const{
-    return Iterator<TYPE>(NULL);
+  DataIterator<TYPE> end() const{
+    return DataIterator<TYPE>(NULL);
   }
 
 private:
-  Node<TYPE>* head_;
+  Nodes nodes_;
   unsigned size_;
 };
 

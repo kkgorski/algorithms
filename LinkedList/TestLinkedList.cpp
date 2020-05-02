@@ -324,7 +324,10 @@ TEST_CASE("It is possible to iterate through linkedList", "[begin, end, Iterator
 
       std::vector<int> result = {};
 
-      for(auto it : linkedList){
+      for(int it : linkedList){
+        it++;
+      }
+      for(int it : linkedList){
         result.emplace_back(it);
       }
 
@@ -361,4 +364,3 @@ TEST_CASE("It is possible to iterate through linkedList and modify elements", "[
     }
   }
 }
-

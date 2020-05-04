@@ -40,7 +40,7 @@ TEST_CASE("Items can be removed from linkedList", "[removeFirst]") {
 
       linkedList.removeFirst();
 
-      THEN("List size is 1 and front returns 2"){
+      THEN("List size is 1 and front returns 4"){
 
         REQUIRE(linkedList.size() == 1);
         REQUIRE(linkedList.front() == 4);

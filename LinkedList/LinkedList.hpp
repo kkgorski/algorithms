@@ -72,8 +72,7 @@ public:
     return true;
   }
   template<typename functionType>
-  void forEach(functionType function)
-  {
+  void forEach(functionType function){
     for(auto node: nodes_){
       function(node->data());
     }

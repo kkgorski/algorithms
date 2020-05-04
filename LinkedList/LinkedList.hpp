@@ -77,6 +77,10 @@ public:
       function(node->data());
     }
   }
+  template<typename functionType>
+  void removeIf(functionType function){
+    (void) function;
+  }
   DataIterator<TYPE> begin() const{
     return DataIterator<TYPE>(nodes_.head_);
   }

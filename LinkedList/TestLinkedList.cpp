@@ -364,3 +364,26 @@ TEST_CASE("It is possible to iterate through linkedList and modify elements", "[
     }
   }
 }
+
+TEST_CASE("It is possible to remove linkedList's elements during iteration", "[removeIf]") {
+  GIVEN("An list(2,2,2,1,2,2,2,3,2,4,5,6,2,2,2)"){
+
+    std::array<int,15> array = {2,2,2,1,2,2,2,3,2,4,5,6,2,2,2};
+    LinkedList<int> linkedList(array);
+    REQUIRE(linkedList.size() == 15);
+
+    WHEN("All elements eual to Two should be removed"){
+
+      linkedList.removeIf(equalsTwo);
+
+      THEN("The result is a list(1,3,4,5,6)"){
+
+        std::array<int,5> array = {1,3,4,5,6};
+        LinkedList<int> expectedList(array);
+        REQUIRE(linkedList.size() == 5);
+        REQUIRE(linkedList == expectedList);
+      }
+    }
+  }
+}
+

@@ -51,3 +51,7 @@ struct incrementBy{
   }
   int addend_;
 };
+
+bool equalsTwo(int a){
+  return (2 == a);
+}

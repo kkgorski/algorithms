@@ -79,7 +79,36 @@ public:
   }
   template<typename functionType>
   void removeIf(functionType function){
-    (void) function;
+    if(!nodes_.head_){
+      return;
+    }
+
+    Node<TYPE> * validHead = nodes_.head_;
+    while(function(validHead->data())){
+      Node<TYPE> * removableNode = validHead;
+      validHead = validHead->next();
+      delete removableNode;
+      size_--;
+    }
+    nodes_.head_ = validHead;
+
+    Node<TYPE> * preceedingNode= nodes_.head_;
+    Node<TYPE> * followingNode = nodes_.head_->next();
+    while(followingNode)
+    {
+      while(followingNode && function(followingNode->data())){
+        Node<TYPE> * removableNode = followingNode;
+        followingNode = followingNode->next();
+        delete removableNode;
+        size_--;
+      }
+      preceedingNode->setNext(followingNode);
+      if(preceedingNode && followingNode)
+      {
+      preceedingNode = preceedingNode->next();
+      followingNode = followingNode->next();
+      }
+    }
   }
   DataIterator<TYPE> begin() const{
     return DataIterator<TYPE>(nodes_.head_);

@@ -8,6 +8,9 @@ public:
   Node* next() const{
     return next_;
   }
+  void setNext(Node* node){
+    next_ = node;
+  }
 
 private:
   TYPE data_;

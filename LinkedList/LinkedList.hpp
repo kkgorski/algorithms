@@ -116,9 +116,15 @@ public:
   DataIterator<TYPE> end() const{
     return DataIterator<TYPE>(NULL);
   }
-  friend std::ostream& operator<<(std::ostream& os, const LinkedList& linkedList)
-  {
-    os << "()";
+  friend std::ostream& operator<<(std::ostream& os, const LinkedList& linkedList){
+    os << "(";
+    for(auto node: linkedList.nodes_){
+      os << node->data();
+      if(node->next()){
+        os << ",";
+      }
+    }
+    os << ")";
     return os;
   }
 

@@ -83,13 +83,13 @@ public:
       return;
     }
 
-    nodes_.head_ = removeConsecutiveNodesIf(nodes_.head_, function);
+    removeConsecutiveNodesIf(nodes_.head_, function);
 
-    Node<TYPE> * preceedingNode= nodes_.head_;
-    Node<TYPE> * followingNode = nodes_.head_->next();
+    Node<TYPE>* preceedingNode= nodes_.head_;
+    Node<TYPE>* followingNode = nodes_.head_->next();
     while(followingNode)
     {
-      followingNode = removeConsecutiveNodesIf(followingNode, function);
+      removeConsecutiveNodesIf(followingNode, function);
       preceedingNode->setNext(followingNode);
       if(preceedingNode && followingNode)
       {
@@ -118,14 +118,13 @@ public:
 
 private:
   template<typename functionType>
-  Node<TYPE> * removeConsecutiveNodesIf(Node<TYPE> * node, functionType function){
+  void removeConsecutiveNodesIf(Node<TYPE>*& node, functionType function){
     while(node && function(node->data())){
-      Node<TYPE> * removableNode = node;
+      Node<TYPE>* removableNode = node;
       node = node->next();
       delete removableNode;
       size_--;
     }
-    return node;
   }
 
   Nodes nodes_;

@@ -83,25 +83,13 @@ public:
       return;
     }
 
-    Node<TYPE> * validHead = nodes_.head_;
-    while(function(validHead->data())){
-      Node<TYPE> * removableNode = validHead;
-      validHead = validHead->next();
-      delete removableNode;
-      size_--;
-    }
-    nodes_.head_ = validHead;
+    nodes_.head_ = removeConsecutiveNodesIf(nodes_.head_, function);
 
     Node<TYPE> * preceedingNode= nodes_.head_;
     Node<TYPE> * followingNode = nodes_.head_->next();
     while(followingNode)
     {
-      while(followingNode && function(followingNode->data())){
-        Node<TYPE> * removableNode = followingNode;
-        followingNode = followingNode->next();
-        delete removableNode;
-        size_--;
-      }
+      followingNode = removeConsecutiveNodesIf(followingNode, function);
       preceedingNode->setNext(followingNode);
       if(preceedingNode && followingNode)
       {
@@ -129,6 +117,17 @@ public:
   }
 
 private:
+  template<typename functionType>
+  Node<TYPE> * removeConsecutiveNodesIf(Node<TYPE> * node, functionType function){
+    while(node && function(node->data())){
+      Node<TYPE> * removableNode = node;
+      node = node->next();
+      delete removableNode;
+      size_--;
+    }
+    return node;
+  }
+
   Nodes nodes_;
   unsigned size_;
 };

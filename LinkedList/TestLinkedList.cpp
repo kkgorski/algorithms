@@ -387,3 +387,24 @@ TEST_CASE("It is possible to remove linkedList's elements during iteration", "[r
   }
 }
 
+TEST_CASE("It is possible to print linkedList", "[operator<<]") {
+  GIVEN("An list(1,3,4,5,6)"){
+
+    std::array<int,5> array = {1,3,4,5,6};
+    LinkedList<int> linkedList(array);
+
+    WHEN("List is <<ed to std::ostream"){
+
+      std::stringstream os;
+      os << linkedList;
+
+      THEN("The result is a list(1,3,4,5,6)"){
+        std::stringstream expectedOs;
+        expectedOs << "(1,3,4,5,6)";
+
+        REQUIRE(os.str() == expectedOs.str());
+      }
+    }
+  }
+}
+

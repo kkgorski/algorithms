@@ -116,9 +116,15 @@ public:
   DataIterator<TYPE> end() const{
     return DataIterator<TYPE>(NULL);
   }
+  friend std::ostream& operator<<(std::ostream& os, const LinkedList& linkedList)
+  {
+    os << "()";
+    return os;
+  }
 
 private:
   Nodes nodes_;
   unsigned size_;
 };
+
 

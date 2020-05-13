@@ -85,16 +85,14 @@ public:
 
     removeConsecutiveNodesIf(nodes_.head_, function);
 
-    Node<TYPE>* preceedingNode= nodes_.head_;
-    Node<TYPE>* followingNode = nodes_.head_->next();
-    while(followingNode)
-    {
-      removeConsecutiveNodesIf(followingNode, function);
-      preceedingNode->setNext(followingNode);
-      if(preceedingNode && followingNode)
-      {
-      preceedingNode = preceedingNode->next();
-      followingNode = followingNode->next();
+    Node<TYPE>* node     = nodes_.head_;
+    Node<TYPE>* nextNode = nodes_.head_->next();
+    while(nextNode){
+      removeConsecutiveNodesIf(nextNode, function);
+      node->setNext(nextNode);
+      if(nextNode){
+        node = nextNode;
+        nextNode = nextNode->next();
       }
     }
   }

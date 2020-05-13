@@ -408,3 +408,23 @@ TEST_CASE("It is possible to print linkedList", "[operator<<]") {
   }
 }
 
+TEST_CASE("It is possible to remove duplicates", "[removeDuplicates]") {
+  GIVEN("An list(1,1,3,4,4,5,7,6,6)"){
+
+    std::array<int,9> array = {1,1,3,4,4,5,7,6,6};
+    LinkedList<int> linkedList(array);
+
+    WHEN("removeDuplicates function is called"){
+
+      linkedList.removeDuplicates();
+
+      THEN("The result is a list(1,3,4,5,6)"){
+        std::array<int,5> array = {1,3,4,5,6};
+        LinkedList<int> expectedLinkedList(array);
+
+        REQUIRE(expectedLinkedList == linkedList);
+      }
+    }
+  }
+}
+

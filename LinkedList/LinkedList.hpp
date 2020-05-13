@@ -113,6 +113,8 @@ public:
     os << ")";
     return os;
   }
+  void removeDuplicates(){
+  }
 
 private:
   template<typename functionType>

@@ -408,6 +408,30 @@ TEST_CASE("It is possible to print linkedList", "[operator<<]") {
   }
 }
 
+TEST_CASE("It is possible to check if list contains an element", "[contains]") {
+  GIVEN("An list(1,1,3,4,4,5,7,6,6)"){
+
+    std::array<int,9> array = {1,1,3,4,4,5,7,6,6};
+    LinkedList<int> linkedList(array);
+
+    WHEN("Function contains is called for each number [0-9]"){
+
+      THEN("The results are true for 1 3 4 5 6 and 7, and false for the rest"){
+
+        REQUIRE(true  == linkedList.contains(1));
+        REQUIRE(false == linkedList.contains(2));
+        REQUIRE(true  == linkedList.contains(3));
+        REQUIRE(true  == linkedList.contains(4));
+        REQUIRE(true  == linkedList.contains(5));
+        REQUIRE(true  == linkedList.contains(6));
+        REQUIRE(true  == linkedList.contains(7));
+        REQUIRE(false == linkedList.contains(8));
+        REQUIRE(false == linkedList.contains(9));
+      }
+    }
+  }
+}
+
 TEST_CASE("It is possible to remove duplicates", "[removeDuplicates]") {
   GIVEN("An list(1,1,3,4,4,5,7,6,6)"){
 

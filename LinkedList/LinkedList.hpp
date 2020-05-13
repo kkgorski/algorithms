@@ -113,6 +113,10 @@ public:
     os << ")";
     return os;
   }
+  bool contains(const TYPE& item) const{
+    (void) item;
+    return true;
+  }
   void removeDuplicates(){
   }
 

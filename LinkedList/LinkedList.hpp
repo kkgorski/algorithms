@@ -114,8 +114,12 @@ public:
     return os;
   }
   bool contains(const TYPE& item) const{
-    (void) item;
-    return true;
+    for (const auto& data : *this){
+      if(item == data){
+        return true;
+      }
+    }
+    return false;
   }
   void removeDuplicates(){
   }

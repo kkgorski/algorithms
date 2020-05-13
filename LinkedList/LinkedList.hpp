@@ -1,5 +1,7 @@
+#pragma once
 #include "Node.hpp"
 #include "Iterator.hpp"
+#include "utils.hpp"
 
 template<typename TYPE>
 class LinkedList

@@ -1,3 +1,4 @@
+#pragma once
 // ******************** REVERSE ITERATOR ********************
 //https://stackoverflow.com/questions/8542591/c11-reverse-range-based-for-loop
 template <typename T>

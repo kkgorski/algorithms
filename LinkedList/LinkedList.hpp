@@ -19,7 +19,7 @@ public:
   template<typename T>
   LinkedList(T iterable) : nodes_(NULL), size_(0)
   {
-    for (auto value : reverse_wrap(iterable)) {
+    for(auto value : reverse_wrap(iterable)) {
       prepend(value);
     }
   }
@@ -51,9 +51,9 @@ public:
   TYPE& front() const{
     return nodes_.head_->data();
   }
-  LinkedList reverse() const{
+  LinkedList reverse() const{//TODO implement non-const method, which reverses list in place
     LinkedList list;
-    for (const auto& data : *this){
+    for(const auto& data : *this){
       list.prepend(data);
     }
     return list;
@@ -63,7 +63,7 @@ public:
       return false;
     }
     Node<TYPE>* otherCurrentNode = other.nodes_.head_;
-    for (const auto& data : *this){
+    for(const auto& data : *this){
       if(data != otherCurrentNode->data()){
         return false;
       }
@@ -114,16 +114,16 @@ public:
     return os;
   }
   bool contains(const TYPE& item) const{
-    for (const auto& data : *this){
+    for(const auto& data : *this){
       if(item == data){
         return true;
       }
     }
     return false;
   }
-  LinkedList removeDuplicates(){
+  LinkedList removeDuplicates() const{ //TODO implement non-const method, which reverses list in place
     LinkedList list;
-    for (const auto& data : *this){
+    for(const auto& data : *this){
       if(!list.contains(data)){
         list.prepend(data);
       }

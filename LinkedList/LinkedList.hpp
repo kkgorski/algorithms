@@ -121,7 +121,14 @@ public:
     }
     return false;
   }
-  void removeDuplicates(){
+  LinkedList removeDuplicates(){
+    LinkedList list;
+    for (const auto& data : *this){
+      if(!list.contains(data)){
+        list.prepend(data);
+      }
+    }
+    return list.reverse();
   }
 
 private:

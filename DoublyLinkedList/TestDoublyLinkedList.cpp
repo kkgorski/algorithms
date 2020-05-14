@@ -7,110 +7,110 @@
 #include "DoublyLinkedList.hpp"
 #include "TestUtils.hpp"
 
-TEST_CASE("Items can be added to linkedList", "[prepend]") {
+TEST_CASE("Items can be added to doublyLinkedList", "[prepend]") {
   GIVEN("An empty int list"){
 
-    LinkedList<int> linkedList;
-    REQUIRE(linkedList.size() == 0);
+    DoublyLinkedList<int> doublyLinkedList;
+    REQUIRE(doublyLinkedList.size() == 0);
 
     WHEN("int 2 is prepended"){
 
-      linkedList.prepend(2);
+      doublyLinkedList.prepend(2);
 
       THEN("List size is 1 and front returns 2"){
 
-        REQUIRE(linkedList.size() == 1);
-        REQUIRE(linkedList.front() == 2);
+        REQUIRE(doublyLinkedList.size() == 1);
+        REQUIRE(doublyLinkedList.front() == 2);
       }
     }
   }
 }
 
-TEST_CASE("Items can be removed from linkedList", "[removeFirst]") {
+TEST_CASE("Items can be removed from doublyLinkedList", "[removeFirst]") {
   GIVEN("An int list [3,4]"){
 
-    LinkedList<int> linkedList;
-    linkedList.prepend(4);
-    linkedList.prepend(3);
-    REQUIRE(linkedList.size() == 2);
-    REQUIRE(linkedList.front() == 3);
+    DoublyLinkedList<int> doublyLinkedList;
+    doublyLinkedList.prepend(4);
+    doublyLinkedList.prepend(3);
+    REQUIRE(doublyLinkedList.size() == 2);
+    REQUIRE(doublyLinkedList.front() == 3);
 
     WHEN("first element is removed"){
 
-      linkedList.removeFirst();
+      doublyLinkedList.removeFirst();
 
       THEN("List size is 1 and front returns 4"){
 
-        REQUIRE(linkedList.size() == 1);
-        REQUIRE(linkedList.front() == 4);
+        REQUIRE(doublyLinkedList.size() == 1);
+        REQUIRE(doublyLinkedList.front() == 4);
       }
     }
   }
 }
 
-TEST_CASE("LinkedList can be constructed from vector", "[constructor]") {
+TEST_CASE("DoublyLinkedList can be constructed from vector", "[constructor]") {
   GIVEN("An vector (1,2,3)"){
 
     std::vector<int> vector = {1,2,3};
 
     WHEN("LinedList is created"){
 
-      LinkedList<int> linkedList(vector);
+      DoublyLinkedList<int> doublyLinkedList(vector);
 
       THEN("List size is 3 and front returns 1"){
 
-        REQUIRE(linkedList.size() == 3);
-        REQUIRE(linkedList.front() == 1);
+        REQUIRE(doublyLinkedList.size() == 3);
+        REQUIRE(doublyLinkedList.front() == 1);
       }
     }
   }
 }
 
-TEST_CASE("LinkedList can be constructed from array", "[constructor]") {
+TEST_CASE("DoublyLinkedList can be constructed from array", "[constructor]") {
   GIVEN("An array (1,2,3)"){
 
     std::array<int,3> array = {1,2,3};
 
     WHEN("LinedList is created"){
 
-      LinkedList<int> linkedList(array);
+      DoublyLinkedList<int> doublyLinkedList(array);
 
       THEN("List size is 3 and front returns 1"){
 
-        REQUIRE(linkedList.size() == 3);
-        REQUIRE(linkedList.front() == 1);
+        REQUIRE(doublyLinkedList.size() == 3);
+        REQUIRE(doublyLinkedList.front() == 1);
       }
     }
   }
 }
 
-TEST_CASE("LinkedList can be compared", "[operator==]") {
+TEST_CASE("DoublyLinkedList can be compared", "[operator==]") {
   GIVEN("Two identical empty int lists"){
 
-    LinkedList<int> linkedList;
-    LinkedList<int> linkedList2;
-    REQUIRE(linkedList.size() == 0);
-    REQUIRE(linkedList2.size() == 0);
+    DoublyLinkedList<int> doublyLinkedList;
+    DoublyLinkedList<int> doublyLinkedList2;
+    REQUIRE(doublyLinkedList.size() == 0);
+    REQUIRE(doublyLinkedList2.size() == 0);
 
     WHEN("They are compared"){
 
       THEN("Result is true"){
-        REQUIRE(linkedList == linkedList2);
+        REQUIRE(doublyLinkedList == doublyLinkedList2);
       }
     }
   }
   GIVEN("Two identical int lists [1,2,3]"){
 
     std::array<int,3> array = {1,2,3};
-    LinkedList<int> linkedList(array);
-    LinkedList<int> linkedList2(array);
-    REQUIRE(linkedList.size() == 3);
-    REQUIRE(linkedList2.size() == 3);
+    DoublyLinkedList<int> doublyLinkedList(array);
+    DoublyLinkedList<int> doublyLinkedList2(array);
+    REQUIRE(doublyLinkedList.size() == 3);
+    REQUIRE(doublyLinkedList2.size() == 3);
 
     WHEN("They are compared"){
 
       THEN("Result is true"){
-        REQUIRE(linkedList == linkedList2);
+        REQUIRE(doublyLinkedList == doublyLinkedList2);
       }
     }
   }
@@ -118,65 +118,65 @@ TEST_CASE("LinkedList can be compared", "[operator==]") {
 
     std::array<int,3> array = {1,2,3};
     std::array<int,3> array2 = {1,2,5};
-    LinkedList<int> linkedList(array);
-    LinkedList<int> linkedList2(array2);
-    REQUIRE(linkedList.size() == 3);
-    REQUIRE(linkedList2.size() == 3);
+    DoublyLinkedList<int> doublyLinkedList(array);
+    DoublyLinkedList<int> doublyLinkedList2(array2);
+    REQUIRE(doublyLinkedList.size() == 3);
+    REQUIRE(doublyLinkedList2.size() == 3);
 
     WHEN("They are compared"){
 
       THEN("Result is true"){
-        REQUIRE_FALSE(linkedList == linkedList2);
+        REQUIRE_FALSE(doublyLinkedList == doublyLinkedList2);
       }
     }
   }
 }
 
-TEST_CASE("LinkedList can be reversed", "[reverse]") {
+TEST_CASE("DoublyLinkedList can be reversed", "[reverse]") {
   GIVEN("An list(1,2,3)"){
 
     std::array<int,3> array = {1,2,3};
-    LinkedList<int> linkedList(array);
-    REQUIRE(linkedList.size() == 3);
+    DoublyLinkedList<int> doublyLinkedList(array);
+    REQUIRE(doublyLinkedList.size() == 3);
 
-    WHEN("LinkedList is reversed"){
+    WHEN("DoublyLinkedList is reversed"){
 
-      LinkedList<int> reversedLinkedList = linkedList.reverse();
+      DoublyLinkedList<int> reversedDoublyLinkedList = doublyLinkedList.reverse();
 
       THEN("The result is a list(3,2,1)"){
 
         std::array<int,3> array = {3,2,1};
-        LinkedList<int> expectedList(array);
-        REQUIRE(reversedLinkedList.size() == 3);
-        REQUIRE(reversedLinkedList == expectedList);
+        DoublyLinkedList<int> expectedList(array);
+        REQUIRE(reversedDoublyLinkedList.size() == 3);
+        REQUIRE(reversedDoublyLinkedList == expectedList);
       }
     }
   }
 }
 
-TEST_CASE("LinkedList can be iterated", "[forEach]") {
+TEST_CASE("DoublyLinkedList can be iterated", "[forEach]") {
   GIVEN("An list(1,2,3)"){
 
     std::array<int,3> array = {1,2,3};
-    LinkedList<int> linkedList(array);
-    REQUIRE(linkedList.size() == 3);
+    DoublyLinkedList<int> doublyLinkedList(array);
+    REQUIRE(doublyLinkedList.size() == 3);
 
     WHEN("For each element incrementByOne function is called"){
 
-      linkedList.forEach(incrementBy(2));
+      doublyLinkedList.forEach(incrementBy(2));
 
       THEN("The result is a list(2,3,4)"){
 
         std::array<int,3> array = {2,3,4};
-        LinkedList<int> expectedList(array);
-        REQUIRE(linkedList.size() == 3);
-        REQUIRE(linkedList == expectedList);
+        DoublyLinkedList<int> expectedList(array);
+        REQUIRE(doublyLinkedList.size() == 3);
+        REQUIRE(doublyLinkedList == expectedList);
       }
     }
   }
 }
 
-// This may seem irrelevant to linkedList but I wanted to have one test binary, at least for now
+// This may seem irrelevant to doublyLinkedList but I wanted to have one test binary, at least for now
 // It will be needed for next UTs
 // TODO move to some general test utils
 TEST_CASE("ConstructorCounter", "[all]") {
@@ -287,20 +287,20 @@ TEST_CASE("ConstructorCounter", "[all]") {
   }
 }
 
-TEST_CASE("Items are moved to linkedList", "[emplaceFront]") {
+TEST_CASE("Items are moved to doublyLinkedList", "[emplaceFront]") {
   GIVEN("An empty ConstructorCounter list"){
 
     resetConstructorCounters();
-    LinkedList<ConstructorCounter> linkedList;
-    REQUIRE(linkedList.size() == 0);
+    DoublyLinkedList<ConstructorCounter> doublyLinkedList;
+    REQUIRE(doublyLinkedList.size() == 0);
 
     WHEN("An rvalue object is prepended"){
 
-      linkedList.emplaceFront(std::move(ConstructorCounter()));
+      doublyLinkedList.emplaceFront(std::move(ConstructorCounter()));
 
       THEN("List size is 1 and move constructor is called once"){
 
-        REQUIRE(linkedList.size() == 1);
+        REQUIRE(doublyLinkedList.size() == 1);
         REQUIRE(defaultConstructorCalled == 1);
         REQUIRE(copyConstructorCalled == 0);
         REQUIRE(moveConstructorCalled == 1);
@@ -312,21 +312,21 @@ TEST_CASE("Items are moved to linkedList", "[emplaceFront]") {
   }
 }
 
-TEST_CASE("It is possible to iterate through linkedList", "[begin, end, Iterator]") {
+TEST_CASE("It is possible to iterate through doublyLinkedList", "[begin, end, Iterator]") {
   GIVEN("An int list (1,2,3)"){
 
     std::array<int,3> array = {1,2,3};
-    LinkedList<int> linkedList(array);
-    REQUIRE(linkedList.size() == 3);
+    DoublyLinkedList<int> doublyLinkedList(array);
+    REQUIRE(doublyLinkedList.size() == 3);
 
-    WHEN("Vector is constructed from linkedList values during for loop"){
+    WHEN("Vector is constructed from doublyLinkedList values during for loop"){
 
       std::vector<int> result = {};
 
-      for(int it : linkedList){
+      for(int it : doublyLinkedList){
         it++;
       }
-      for(int it : linkedList){
+      for(int it : doublyLinkedList){
         result.emplace_back(it);
       }
 
@@ -340,62 +340,62 @@ TEST_CASE("It is possible to iterate through linkedList", "[begin, end, Iterator
   }
 }
 
-TEST_CASE("It is possible to iterate through linkedList and modify elements", "[begin, end, Iterator]") {
+TEST_CASE("It is possible to iterate through doublyLinkedList and modify elements", "[begin, end, Iterator]") {
   GIVEN("An list(1,2,3)"){
 
     std::array<int,3> array = {1,2,3};
-    LinkedList<int> linkedList(array);
-    REQUIRE(linkedList.size() == 3);
+    DoublyLinkedList<int> doublyLinkedList(array);
+    REQUIRE(doublyLinkedList.size() == 3);
 
     WHEN("For each element incrementByOne function is called"){
 
-      for(auto& it : linkedList){
+      for(auto& it : doublyLinkedList){
         it++;
       }
 
       THEN("The result is a list(2,3,4)"){
 
         std::array<int,3> array = {2,3,4};
-        LinkedList<int> expectedList(array);
-        REQUIRE(linkedList.size() == 3);
-        REQUIRE(linkedList == expectedList);
+        DoublyLinkedList<int> expectedList(array);
+        REQUIRE(doublyLinkedList.size() == 3);
+        REQUIRE(doublyLinkedList == expectedList);
       }
     }
   }
 }
 
-TEST_CASE("It is possible to remove linkedList's elements during iteration", "[removeIf]") {
+TEST_CASE("It is possible to remove doublyLinkedList's elements during iteration", "[removeIf]") {
   GIVEN("An list(2,2,2,1,2,2,2,3,2,4,5,6,2,2,2)"){
 
     std::array<int,15> array = {2,2,2,1,2,2,2,3,2,4,5,6,2,2,2};
-    LinkedList<int> linkedList(array);
-    REQUIRE(linkedList.size() == 15);
+    DoublyLinkedList<int> doublyLinkedList(array);
+    REQUIRE(doublyLinkedList.size() == 15);
 
     WHEN("All elements eual to Two should be removed"){
 
-      linkedList.removeIf(equalsTwo);
+      doublyLinkedList.removeIf(equalsTwo);
 
       THEN("The result is a list(1,3,4,5,6)"){
 
         std::array<int,5> array = {1,3,4,5,6};
-        LinkedList<int> expectedList(array);
-        REQUIRE(linkedList.size() == 5);
-        REQUIRE(linkedList == expectedList);
+        DoublyLinkedList<int> expectedList(array);
+        REQUIRE(doublyLinkedList.size() == 5);
+        REQUIRE(doublyLinkedList == expectedList);
       }
     }
   }
 }
 
-TEST_CASE("It is possible to print linkedList", "[operator<<]") {
+TEST_CASE("It is possible to print doublyLinkedList", "[operator<<]") {
   GIVEN("An list(1,3,4,5,6)"){
 
     std::array<int,5> array = {1,3,4,5,6};
-    LinkedList<int> linkedList(array);
+    DoublyLinkedList<int> doublyLinkedList(array);
 
     WHEN("List is <<ed to std::ostream"){
 
       std::stringstream os;
-      os << linkedList;
+      os << doublyLinkedList;
 
       THEN("The result is a list(1,3,4,5,6)"){
         std::stringstream expectedOs;
@@ -411,21 +411,21 @@ TEST_CASE("It is possible to check if list contains an element", "[contains]") {
   GIVEN("An list(1,1,3,4,4,5,7,6,6)"){
 
     std::array<int,9> array = {1,1,3,4,4,5,7,6,6};
-    LinkedList<int> linkedList(array);
+    DoublyLinkedList<int> doublyLinkedList(array);
 
     WHEN("Function contains is called for each number [0-9]"){
 
       THEN("The results are true for 1 3 4 5 6 and 7, and false for the rest"){
 
-        REQUIRE(true  == linkedList.contains(1));
-        REQUIRE(false == linkedList.contains(2));
-        REQUIRE(true  == linkedList.contains(3));
-        REQUIRE(true  == linkedList.contains(4));
-        REQUIRE(true  == linkedList.contains(5));
-        REQUIRE(true  == linkedList.contains(6));
-        REQUIRE(true  == linkedList.contains(7));
-        REQUIRE(false == linkedList.contains(8));
-        REQUIRE(false == linkedList.contains(9));
+        REQUIRE(true  == doublyLinkedList.contains(1));
+        REQUIRE(false == doublyLinkedList.contains(2));
+        REQUIRE(true  == doublyLinkedList.contains(3));
+        REQUIRE(true  == doublyLinkedList.contains(4));
+        REQUIRE(true  == doublyLinkedList.contains(5));
+        REQUIRE(true  == doublyLinkedList.contains(6));
+        REQUIRE(true  == doublyLinkedList.contains(7));
+        REQUIRE(false == doublyLinkedList.contains(8));
+        REQUIRE(false == doublyLinkedList.contains(9));
       }
     }
   }
@@ -435,17 +435,17 @@ TEST_CASE("It is possible to remove duplicates", "[removeDuplicates]") {
   GIVEN("An list(1,1,3,4,4,5,7,6,6)"){
 
     std::array<int,9> array = {1,1,3,4,4,5,7,6,6};
-    LinkedList<int> linkedList(array);
+    DoublyLinkedList<int> doublyLinkedList(array);
 
     WHEN("removeDuplicates function is called"){
 
-      LinkedList<int> listWithoutDuplicates = linkedList.removeDuplicates();
+      DoublyLinkedList<int> listWithoutDuplicates = doublyLinkedList.removeDuplicates();
 
       THEN("The result is a list(1,3,4,5,7,6)"){
         std::array<int,6> array = {1,3,4,5,7,6};
-        LinkedList<int> expectedLinkedList(array);
+        DoublyLinkedList<int> expectedDoublyLinkedList(array);
 
-        REQUIRE(expectedLinkedList == listWithoutDuplicates);
+        REQUIRE(expectedDoublyLinkedList == listWithoutDuplicates);
       }
     }
   }

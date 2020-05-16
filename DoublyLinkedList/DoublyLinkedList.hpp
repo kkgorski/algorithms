@@ -78,6 +78,12 @@ public:
   DataIterator<TYPE> end() const{
     return DataIterator<TYPE>(NULL);
   }
+  DataIterator<TYPE> rbegin() const{
+    return DataIterator<TYPE>(NULL);
+  }
+  DataIterator<TYPE> rend() const{
+    return DataIterator<TYPE>(NULL);
+  }
   friend std::ostream& operator<<(std::ostream& os, const DoublyLinkedList& doublyLinkedList){
     os << "()";
     return os;

@@ -2,6 +2,7 @@
 #include <vector>
 #include <array>
 #include <utility>
+#include <string>
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include <catch2/catch.hpp>
 #include "DoublyLinkedList.hpp"
@@ -335,6 +336,27 @@ TEST_CASE("It is possible to remove duplicates", "[removeDuplicates]") {
         DoublyLinkedList<int> expectedDoublyLinkedList(array);
 
         REQUIRE(expectedDoublyLinkedList == listWithoutDuplicates);
+      }
+    }
+  }
+}
+
+TEST_CASE("It is possible to iterate in reverse order", "[rbegin, rend]") {
+  GIVEN("An list(1,3,4,5,6)"){
+
+    std::array<int,5> array = {1,3,4,5,6};
+    DoublyLinkedList<int> doublyLinkedList(array);
+
+    WHEN("List is iterated in reverse order"){
+
+      std::string result = "";
+      for(auto it = doublyLinkedList.rbegin(); it != doublyLinkedList.rend(); ++it){
+        result += *it;
+      }
+
+      THEN("The result is a list(1,3,4,5,6)"){
+
+        REQUIRE(result == "65431");
       }
     }
   }

@@ -21,9 +21,14 @@ public:
     size_++;
   }
   void emplaceFront(TYPE&& item){
-    (void) item;
+    head_ = new Node<TYPE>(std::move(item), NULL, head_);
+    size_++;
   }
   void removeFirst(){
+    Node<TYPE>* headCopy = head_;
+    head_ = head_->next();
+    delete headCopy;
+    size_--;
   }
   TYPE& front() const{
     return head_->data();

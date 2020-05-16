@@ -2,14 +2,26 @@
 
 #include "Node.hpp"
 #include "utils.hpp"
+#include "Iterator.hpp"
 
 template<typename TYPE>
 class DoublyLinkedList
 {
+  struct Nodes{
+    Nodes(Node<TYPE>* head, Node<TYPE>* tail) : head_(head), tail_(tail) {}
+    NodeIterator<TYPE> begin() const{
+      return NodeIterator<TYPE>(head_);
+    }
+    NodeIterator<TYPE> end() const{
+      return NodeIterator<TYPE>(tail_);
+    }
+		Node<TYPE>* head_;
+		Node<TYPE>* tail_;
+  };
 public:
-  DoublyLinkedList() : head_(NULL), tail_(NULL), size_(0){}
+  DoublyLinkedList() : nodes_(NULL, NULL), size_(0){}
   template<typename T>
-  DoublyLinkedList(T iterable) : head_(NULL), tail_(NULL), size_(0){
+  DoublyLinkedList(T iterable) : nodes_(NULL, NULL), size_(0){
     for(auto value : reverse_wrap(iterable)) {
       prepend(value);
     }
@@ -20,27 +32,37 @@ public:
     return size_;
   }
   void prepend(TYPE item){
-    head_ = new Node<TYPE>(std::move(item), NULL, head_);
+    nodes_.head_ = new Node<TYPE>(std::move(item), NULL, nodes_.head_);
     size_++;
   }
   void emplaceFront(TYPE&& item){
-    head_ = new Node<TYPE>(std::move(item), NULL, head_);
+    nodes_.head_ = new Node<TYPE>(std::move(item), NULL, nodes_.head_);
     size_++;
   }
   void removeFirst(){
-    Node<TYPE>* headCopy = head_;
-    head_ = head_->next();
+    Node<TYPE>* headCopy = nodes_.head_;
+    nodes_.head_ = nodes_.head_->next();
     delete headCopy;
     size_--;
   }
   TYPE& front() const{
-    return head_->data();
+    return nodes_.head_->data();
   }
   DoublyLinkedList reverse() const{//TODO implement non-const method, which reverses list in place
     return (*this);
   }
   bool operator==(const DoublyLinkedList& other) const{
-    return false;
+    if(size_ != other.size_){
+      return false;
+    }
+    Node<TYPE>* otherCurrentNode = other.nodes_.head_;
+    for(const auto& data : *this){
+      if(data != otherCurrentNode->data()){
+        return false;
+      }
+      otherCurrentNode = otherCurrentNode->next();
+    }
+    return true;
   }
   template<typename functionType>
   void forEach(functionType function){
@@ -50,11 +72,11 @@ public:
   void removeIf(functionType function){
     (void) function;
   }
-  TYPE* begin() const{
-    return NULL;
+  DataIterator<TYPE> begin() const{
+    return DataIterator<TYPE>(nodes_.head_);
   }
-  TYPE* end() const{
-    return NULL;
+  DataIterator<TYPE> end() const{
+    return DataIterator<TYPE>(NULL);
   }
   friend std::ostream& operator<<(std::ostream& os, const DoublyLinkedList& doublyLinkedList){
     os << "()";
@@ -67,8 +89,7 @@ public:
     return *(this);
   }
 private:
-  Node<TYPE>* head_;
-  Node<TYPE>* tail_;
+  Nodes nodes_;
   unsigned size_;
 };
 

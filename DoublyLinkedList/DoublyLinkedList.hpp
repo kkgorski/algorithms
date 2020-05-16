@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Node.hpp"
+#include "utils.hpp"
 
 template<typename TYPE>
 class DoublyLinkedList
@@ -8,8 +9,10 @@ class DoublyLinkedList
 public:
   DoublyLinkedList() : head_(NULL), tail_(NULL), size_(0){}
   template<typename T>
-  DoublyLinkedList(T iterable){
-    (void) iterable;
+  DoublyLinkedList(T iterable) : head_(NULL), tail_(NULL), size_(0){
+    for(auto value : reverse_wrap(iterable)) {
+      prepend(value);
+    }
   }
   ~DoublyLinkedList(){
   }

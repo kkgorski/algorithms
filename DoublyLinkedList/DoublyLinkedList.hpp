@@ -1,10 +1,12 @@
 #pragma once
 
+#include "Node.hpp"
+
 template<typename TYPE>
 class DoublyLinkedList
 {
 public:
-  DoublyLinkedList(){}
+  DoublyLinkedList() : head_(NULL), tail_(NULL), size_(0){}
   template<typename T>
   DoublyLinkedList(T iterable){
     (void) iterable;
@@ -12,10 +14,11 @@ public:
   ~DoublyLinkedList(){
   }
   unsigned size() const{
-    return 0;
+    return size_;
   }
   void prepend(TYPE item){
-    (void) item;
+    head_ = new Node<TYPE>(std::move(item), NULL, head_);
+    size_++;
   }
   void emplaceFront(TYPE&& item){
     (void) item;
@@ -23,8 +26,7 @@ public:
   void removeFirst(){
   }
   TYPE& front() const{
-    TYPE* element = new TYPE();
-    return (*element);
+    return head_->data();
   }
   DoublyLinkedList reverse() const{//TODO implement non-const method, which reverses list in place
     return (*this);
@@ -56,7 +58,9 @@ public:
   DoublyLinkedList removeDuplicates() const{ //TODO implement non-const method, which reverses list in place
     return *(this);
   }
-
+private:
+  Node<TYPE>* head_;
+  Node<TYPE>* tail_;
+  unsigned size_;
 };
-
 

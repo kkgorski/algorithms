@@ -16,6 +16,9 @@ public:
   void setPrev(Node<TYPE>* prev){
     prev_ = prev;
   }
+  void setNext(Node<TYPE>* next){
+    next_ = next;
+  }
 
 private:
   TYPE data_;

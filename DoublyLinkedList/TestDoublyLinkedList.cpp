@@ -377,3 +377,25 @@ TEST_CASE("It is possible to iterate in reverse order", "[rbegin, rend]") {
   }
 }
 
+TEST_CASE("Items can be removed from the end of doublyLinkedList", "[removeLast]") {
+  GIVEN("An int list [3,4]"){
+
+    DoublyLinkedList<int> doublyLinkedList;
+    doublyLinkedList.prepend(4);
+    doublyLinkedList.prepend(3);
+    REQUIRE(doublyLinkedList.size() == 2);
+    REQUIRE(doublyLinkedList.front() == 3);
+
+    WHEN("last element is removed"){
+
+      doublyLinkedList.removeLast();
+
+      THEN("List size is 1 and front returns 3"){
+
+        REQUIRE(doublyLinkedList.size() == 1);
+        REQUIRE(doublyLinkedList.front() == 3);
+      }
+    }
+  }
+}
+

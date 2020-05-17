@@ -60,6 +60,13 @@ public:
     delete headCopy;
     size_--;
   }
+  void removeLast(){
+    Node<TYPE>* tailCopy = nodes_.tail_;
+    nodes_.tail_ = nodes_.tail_->prev();
+    nodes_.tail_->setNext(NULL);
+    delete tailCopy;
+    size_--;
+  }
   TYPE& front() const{
     return nodes_.head_->data();
   }
@@ -91,7 +98,11 @@ public:
   }
   template<typename functionType>
   void removeIf(functionType function){
-    (void) function;
+    for(auto node: nodes_){
+      if(function(node->data())){
+        removeNode(node);
+      }
+    }
   }
   DataIterator<TYPE> begin() const{
     return DataIterator<TYPE>(nodes_.head_);
@@ -123,6 +134,19 @@ public:
     return *(this);
   }
 private:
+  void removeNode(Node<TYPE>* node){
+    if(0 == size_)
+      return;
+    if(nodes_.head_ == node){
+      removeFirst();
+    }else if(nodes_.tail_ == node){
+      removeLast();
+    }else{
+      node->next()->setPrev(node->prev());
+      node->prev()->setNext(node->next());
+      size_--;
+    }
+  }
   Nodes nodes_;
   unsigned size_;
 };

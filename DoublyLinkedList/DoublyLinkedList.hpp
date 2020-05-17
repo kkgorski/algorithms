@@ -63,7 +63,11 @@ public:
     return nodes_.head_->data();
   }
   DoublyLinkedList reverse() const{//TODO implement non-const method, which reverses list in place
-    return (*this);
+    DoublyLinkedList list;
+    for(const auto& data : *this){
+      list.prepend(data);
+    }
+    return list;
   }
   bool operator==(const DoublyLinkedList& other) const{
     if(size_ != other.size_){

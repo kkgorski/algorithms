@@ -18,6 +18,21 @@ TEST_CASE("Items can be added to stack", "[push]") {
         REQUIRE(stack.size() == 1);
       }
     }
+    WHEN("int 5,8,9,7 are pushed, and pop() is called"){
+
+      stack.push(5);
+      stack.push(8);
+      stack.push(9);
+      stack.push(7);
+      const int popped = stack.pop();
+
+      THEN("Popped value is 7, stack size is 3 peek returns 9"){
+
+        REQUIRE(popped == 7);
+        REQUIRE(stack.peek() == 9);
+        REQUIRE(stack.size() == 3);
+      }
+    }
   }
 }
 

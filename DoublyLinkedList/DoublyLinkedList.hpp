@@ -84,7 +84,9 @@ public:
   }
   template<typename functionType>
   void forEach(functionType function){
-    (void) function;
+    for(auto node: nodes_){
+      function(node->data());
+    }
   }
   template<typename functionType>
   void removeIf(functionType function){

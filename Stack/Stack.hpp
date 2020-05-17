@@ -1,16 +1,20 @@
 #pragma once
+
+#include "LinkedList.hpp"
+
 template<typename TYPE>
 class Stack{
 public:
   void push(TYPE item){
-    (void) item;
+    list.prepend(item);
   }
   TYPE peek(){
-    return TYPE();
+    return list.front();
   }
   unsigned size(){
-    return 0;
+    return list.size();
   }
 private:
+  LinkedList<TYPE> list;
 };
 

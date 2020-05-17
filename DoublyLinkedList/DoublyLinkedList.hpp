@@ -103,7 +103,14 @@ public:
     return ReverseDataIterator<TYPE>(NULL);
   }
   friend std::ostream& operator<<(std::ostream& os, const DoublyLinkedList& doublyLinkedList){
-    os << "()";
+    os << "(";
+    for(auto node: doublyLinkedList.nodes_){
+      os << node->data();
+      if(node->next()){
+        os << ",";
+      }
+    }
+    os << ")";
     return os;
   }
   bool contains(const TYPE& item) const{

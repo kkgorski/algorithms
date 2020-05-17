@@ -128,6 +128,11 @@ public:
     return os;
   }
   bool contains(const TYPE& item) const{
+    for(const auto& data : *this){
+      if(item == data){
+        return true;
+      }
+    }
     return false;
   }
   DoublyLinkedList removeDuplicates() const{ //TODO implement non-const method, which reverses list in place

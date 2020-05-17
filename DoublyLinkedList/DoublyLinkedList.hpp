@@ -136,7 +136,13 @@ public:
     return false;
   }
   DoublyLinkedList removeDuplicates() const{ //TODO implement non-const method, which reverses list in place
-    return *(this);
+    DoublyLinkedList list;
+    for(const auto& data : *this){
+      if(!list.contains(data)){
+        list.prepend(data);
+      }
+    }
+    return list.reverse();
   }
 private:
   void removeNode(Node<TYPE>* node){

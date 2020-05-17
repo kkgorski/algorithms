@@ -11,7 +11,7 @@ public:
   Iterator& operator++(){
     currentNode_ = nextNode_;
     if(nextNode_){
-    nextNode_ = nextNode_->next();
+      nextNode_ = nextNode_->next();
     }
     return *this;
   }
@@ -27,6 +27,35 @@ public:
 protected:
   Node<TYPE>* currentNode_;
   Node<TYPE>* nextNode_;
+};
+
+template<typename TYPE>
+class ReverseIterator{
+public:
+  explicit ReverseIterator(Node<TYPE>* currentNode) : currentNode_(currentNode){
+    if(currentNode_){
+      prevNode_ = currentNode_->prev();
+    }
+  }
+  ReverseIterator& operator++(){
+    currentNode_ = prevNode_;
+    if(prevNode_){
+			prevNode_ = prevNode_->prev();
+    }
+    return *this;
+  }
+  ReverseIterator operator++() const{
+    return prevNode_;
+  }
+  bool operator==(ReverseIterator other) const{
+    return currentNode_ == other.currentNode_;
+  }
+  bool operator!=(ReverseIterator other) const{
+    return currentNode_ != other.currentNode_;
+  }
+protected:
+  Node<TYPE>* currentNode_;
+  Node<TYPE>* prevNode_;
 };
 
 template<typename TYPE>
@@ -47,6 +76,18 @@ public:
   explicit NodeIterator(Node<TYPE>* currentNode) : Iterator<TYPE>(currentNode) {}
   Node<TYPE>* operator*(){
     return this->currentNode_;
+  }
+};
+
+template<typename TYPE>
+class ReverseDataIterator : public ReverseIterator<TYPE>{
+public:
+  explicit ReverseDataIterator(Node<TYPE>* currentNode) : ReverseIterator<TYPE>(currentNode) {}
+  TYPE operator*() const{
+    return this->currentNode_->data();
+  }
+  TYPE& operator*(){
+    return this->currentNode_->data();
   }
 };
 

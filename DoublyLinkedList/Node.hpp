@@ -10,6 +10,12 @@ public:
   Node<TYPE>* next(){
     return next_;
   }
+  Node<TYPE>* prev(){
+    return prev_;
+  }
+  void setPrev(Node<TYPE>* prev){
+    prev_ = prev;
+  }
 
 private:
   TYPE data_;

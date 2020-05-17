@@ -13,7 +13,7 @@ class DoublyLinkedList
       return NodeIterator<TYPE>(head_);
     }
     NodeIterator<TYPE> end() const{
-      return NodeIterator<TYPE>(tail_);
+      return NodeIterator<TYPE>(NULL);
     }
 		Node<TYPE>* head_;
 		Node<TYPE>* tail_;
@@ -32,11 +32,25 @@ public:
     return size_;
   }
   void prepend(TYPE item){
-    nodes_.head_ = new Node<TYPE>(std::move(item), NULL, nodes_.head_);
+    if(0 == size_){
+      nodes_.head_ = new Node<TYPE>(std::move(item), NULL, NULL);
+      nodes_.tail_ = nodes_.head_;
+    }else{
+      Node<TYPE>* oldHead = nodes_.head_;
+      nodes_.head_ = new Node<TYPE>(std::move(item), NULL, nodes_.head_);
+      oldHead->setPrev(nodes_.head_);
+    }
     size_++;
   }
   void emplaceFront(TYPE&& item){
-    nodes_.head_ = new Node<TYPE>(std::move(item), NULL, nodes_.head_);
+    if(0 == size_){
+      nodes_.head_ = new Node<TYPE>(std::move(item), NULL, NULL);
+      nodes_.tail_ = nodes_.head_;
+    }else{
+      Node<TYPE>* oldHead = nodes_.head_;
+      nodes_.head_ = new Node<TYPE>(std::move(item), NULL, nodes_.head_);
+      oldHead->setPrev(nodes_.head_);
+    }
     size_++;
   }
   void removeFirst(){
@@ -78,11 +92,11 @@ public:
   DataIterator<TYPE> end() const{
     return DataIterator<TYPE>(NULL);
   }
-  DataIterator<TYPE> rbegin() const{
-    return DataIterator<TYPE>(NULL);
+  ReverseDataIterator<TYPE> rbegin() const{
+    return ReverseDataIterator<TYPE>(nodes_.tail_);
   }
-  DataIterator<TYPE> rend() const{
-    return DataIterator<TYPE>(NULL);
+  ReverseDataIterator<TYPE> rend() const{
+    return ReverseDataIterator<TYPE>(NULL);
   }
   friend std::ostream& operator<<(std::ostream& os, const DoublyLinkedList& doublyLinkedList){
     os << "()";

@@ -27,6 +27,9 @@ public:
     }
   }
   ~DoublyLinkedList(){
+    for(auto node: nodes_){
+      delete node;
+    }
   }
   unsigned size() const{
     return size_;
@@ -156,6 +159,7 @@ private:
       node->next()->setPrev(node->prev());
       node->prev()->setNext(node->next());
       size_--;
+      delete node;
     }
   }
   Nodes nodes_;

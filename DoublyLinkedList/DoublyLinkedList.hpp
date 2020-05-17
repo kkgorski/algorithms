@@ -56,6 +56,7 @@ public:
   void removeFirst(){
     Node<TYPE>* headCopy = nodes_.head_;
     nodes_.head_ = nodes_.head_->next();
+    nodes_.head_->setPrev(NULL);
     delete headCopy;
     size_--;
   }

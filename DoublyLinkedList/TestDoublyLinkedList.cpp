@@ -354,10 +354,25 @@ TEST_CASE("It is possible to iterate in reverse order", "[rbegin, rend]") {
       for(auto it = doublyLinkedList.rbegin(); it != doublyLinkedList.rend(); ++it){
         result += std::to_string(*it);
       }
-      THEN("The result is a list(1,3,4,5,6)"){
+      THEN("The result is a 65431"){
 
         REQUIRE(result == "65431");
       }
+    }
+
+    WHEN("List first element is removed"){
+
+      doublyLinkedList.removeFirst();
+      std::string result = "";
+
+      for(auto it = doublyLinkedList.rbegin(); it != doublyLinkedList.rend(); ++it){
+        result += std::to_string(*it);
+      }
+      THEN("The result is 65431"){
+
+        REQUIRE(result == "6543");
+      }
+
     }
   }
 }

@@ -12,10 +12,10 @@ TEST_CASE("Items can be added to stack", "[push]") {
 
       stack.push(2);
 
-      THEN("Stack size is 1 and front returns 2"){
+      THEN("Stack size is 1 and peek returns 2"){
 
-        REQUIRE(stack.size() == 1);
         REQUIRE(stack.peek() == 2);
+        REQUIRE(stack.size() == 1);
       }
     }
   }

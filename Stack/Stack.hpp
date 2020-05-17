@@ -13,11 +13,14 @@ public:
     list.removeFirst();
     return popped;
   }
-  TYPE peek(){
+  TYPE peek() const{
     return list.front();
   }
-  unsigned size(){
+  unsigned size() const{
     return list.size();
+  }
+  bool isEmpty() const{
+    return (0 == list.size());
   }
 private:
   LinkedList<TYPE> list;

@@ -6,7 +6,7 @@ TEST_CASE("Items can be added to stack", "[push]") {
   GIVEN("An empty int stack"){
 
     Stack<int> stack;
-    REQUIRE(stack.size() == 0);
+    REQUIRE(stack.isEmpty());
 
     WHEN("int 2 is pushed"){
 

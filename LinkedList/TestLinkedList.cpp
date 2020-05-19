@@ -16,11 +16,18 @@ TEST_CASE("Items can be added to linkedList", "[prepend]") {
     WHEN("int 2 is prepended"){
 
       linkedList.prepend(2);
+      linkedList.prepend(3);
+      linkedList.prepend(4);
+      linkedList.prepend(5);
 
       THEN("List size is 1 and front returns 2"){
 
-        REQUIRE(linkedList.size() == 1);
-        REQUIRE(linkedList.front() == 2);
+        std::vector<int> vector = {5,4,3,2};
+        LinkedList<int> expectedLinkedList(vector);
+
+        REQUIRE(linkedList.size() == 4);
+        REQUIRE(linkedList.front() == 5);
+        REQUIRE(linkedList == expectedLinkedList);
       }
     }
   }

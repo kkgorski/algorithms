@@ -73,12 +73,14 @@ public:
   TYPE& front() const{
     return nodes_.head_->data();
   }
-  DoublyLinkedList reverse() const{//TODO implement non-const method, which reverses list in place
+  DoublyLinkedList makeReversed() const{//TODO implement non-const method, which reverses list in place
     DoublyLinkedList list;
     for(const auto& data : *this){
       list.prepend(data);
     }
     return list;
+  }
+  void reverse() {
   }
   bool operator==(const DoublyLinkedList& other) const{
     if(size_ != other.size_){
@@ -145,7 +147,7 @@ public:
         list.prepend(data);
       }
     }
-    return list.reverse();
+    return list.makeReversed();
   }
 private:
   void removeNode(Node<TYPE>* node){

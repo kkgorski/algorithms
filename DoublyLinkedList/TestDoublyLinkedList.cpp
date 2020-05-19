@@ -133,7 +133,7 @@ TEST_CASE("DoublyLinkedList can be compared", "[operator==]") {
   }
 }
 
-TEST_CASE("DoublyLinkedList can be reversed", "[reverse]") {
+TEST_CASE("DoublyLinkedList can return reversed copy", "[makeReversed]") {
   GIVEN("An list(1,2,3)"){
 
     std::array<int,3> array = {1,2,3};
@@ -142,7 +142,7 @@ TEST_CASE("DoublyLinkedList can be reversed", "[reverse]") {
 
     WHEN("DoublyLinkedList is reversed"){
 
-      DoublyLinkedList<int> reversedDoublyLinkedList = doublyLinkedList.reverse();
+      DoublyLinkedList<int> reversedDoublyLinkedList = doublyLinkedList.makeReversed();
 
       THEN("The result is a list(3,2,1)"){
 
@@ -150,6 +150,28 @@ TEST_CASE("DoublyLinkedList can be reversed", "[reverse]") {
         DoublyLinkedList<int> expectedList(array);
         REQUIRE(reversedDoublyLinkedList.size() == 3);
         REQUIRE(reversedDoublyLinkedList == expectedList);
+      }
+    }
+  }
+}
+
+TEST_CASE("DoublyLinkedList can be reversed in place", "[reverse]") {
+  GIVEN("An list(1,2,3)"){
+
+    std::array<int,3> array = {1,2,3};
+    DoublyLinkedList<int> doublyLinkedList(array);
+    REQUIRE(doublyLinkedList.size() == 3);
+
+    WHEN("DoublyLinkedList is reversed"){
+
+      doublyLinkedList.reverse();
+
+      THEN("The result is a list(3,2,1)"){
+
+        std::array<int,3> array = {3,2,1};
+        DoublyLinkedList<int> expectedList(array);
+        REQUIRE(doublyLinkedList.size() == 3);
+        REQUIRE(doublyLinkedList == expectedList);
       }
     }
   }

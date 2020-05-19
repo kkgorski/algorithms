@@ -2,6 +2,7 @@
 #include "Node.hpp"
 #include "Iterator.hpp"
 #include "utils.hpp"
+#include <iostream>
 
 template<typename TYPE>
 class LinkedList
@@ -53,12 +54,33 @@ public:
   TYPE& front() const{
     return nodes_.head_->data();
   }
-  LinkedList reverse() const{//TODO implement non-const method, which reverses list in place
+  LinkedList makeReversed() const{//TODO implement non-const method, which reverses list in place
     LinkedList list;
     for(const auto& data : *this){
       list.prepend(data);
     }
     return list;
+  }
+  void reverse() {
+    Node<TYPE>* node = nodes_.head_;
+    bool first = true;
+    while(node){
+      Node<TYPE>* nodeCopy = node;
+
+      prepend(node->data());
+
+      if(first){
+        first = false;
+        nodes_.head_->setNext(NULL);
+      }
+
+      node = node->next();
+
+      if(nodeCopy){
+        delete nodeCopy;
+        size_--;
+      }
+    }
   }
   bool operator==(const LinkedList& other) const{
     if(size_ != other.size_){
@@ -130,7 +152,7 @@ public:
         list.prepend(data);
       }
     }
-    return list.reverse();
+    return list.makeReversed();
   }
 
 private:

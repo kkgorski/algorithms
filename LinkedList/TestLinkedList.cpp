@@ -148,7 +148,7 @@ TEST_CASE("LinkedList can be reversed", "[reverse]") {
 
     WHEN("LinkedList is reversed"){
 
-      LinkedList<int> reversedLinkedList = linkedList.reverse();
+      LinkedList<int> reversedLinkedList = linkedList.makeReversed();
 
       THEN("The result is a list(3,2,1)"){
 
@@ -156,6 +156,28 @@ TEST_CASE("LinkedList can be reversed", "[reverse]") {
         LinkedList<int> expectedList(array);
         REQUIRE(reversedLinkedList.size() == 3);
         REQUIRE(reversedLinkedList == expectedList);
+      }
+    }
+  }
+}
+
+TEST_CASE("LinkedList can be reversed in place", "[reverse]") {
+  GIVEN("An list(1,2,3)"){
+
+    std::array<int,3> array = {1,2,3};
+    LinkedList<int> linkedList(array);
+    REQUIRE(linkedList.size() == 3);
+
+    WHEN("LinkedList is reversed"){
+
+      linkedList.reverse();
+
+      THEN("The result is a list(3,2,1)"){
+
+        std::array<int,3> array = {3,2,1};
+        LinkedList<int> expectedList(array);
+        REQUIRE(linkedList.size() == 3);
+        REQUIRE(linkedList == expectedList);
       }
     }
   }

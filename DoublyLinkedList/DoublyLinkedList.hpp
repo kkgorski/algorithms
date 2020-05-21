@@ -1,23 +1,13 @@
 #pragma once
 
 #include "Node.hpp"
+#include "Nodes.hpp"
 #include "utils.hpp"
 #include "Iterator.hpp"
 
 template<typename TYPE>
 class DoublyLinkedList
 {
-  struct Nodes{
-    Nodes(Node<TYPE>* head, Node<TYPE>* tail) : head_(head), tail_(tail) {}
-    NodeIterator<TYPE> begin() const{
-      return NodeIterator<TYPE>(head_);
-    }
-    NodeIterator<TYPE> end() const{
-      return NodeIterator<TYPE>(NULL);
-    }
-		Node<TYPE>* head_;
-		Node<TYPE>* tail_;
-  };
 public:
   DoublyLinkedList() : nodes_(NULL, NULL), size_(0){}
   template<typename T>
@@ -36,37 +26,37 @@ public:
   }
   void prepend(TYPE item){
     if(0 == size_){
-      nodes_.head_ = new Node<TYPE>(std::move(item), NULL, NULL);
+      nodes_.head_ = nodes_.createNode(std::move(item), NULL, NULL);
       nodes_.tail_ = nodes_.head_;
     }else{
       Node<TYPE>* oldHead = nodes_.head_;
-      nodes_.head_ = new Node<TYPE>(std::move(item), NULL, nodes_.head_);
-      oldHead->setPrev(nodes_.head_);
+      nodes_.head_ = nodes_.createNode(std::move(item), NULL, nodes_.head_);
+      nodes_.setPreceedingNode(oldHead, nodes_.head_);
     }
     size_++;
   }
   void emplaceFront(TYPE&& item){
     if(0 == size_){
-      nodes_.head_ = new Node<TYPE>(std::move(item), NULL, NULL);
+      nodes_.head_ = nodes_.createNode(std::move(item), NULL, NULL);
       nodes_.tail_ = nodes_.head_;
     }else{
       Node<TYPE>* oldHead = nodes_.head_;
-      nodes_.head_ = new Node<TYPE>(std::move(item), NULL, nodes_.head_);
-      oldHead->setPrev(nodes_.head_);
+      nodes_.head_ = nodes_.createNode(std::move(item), NULL, nodes_.head_);
+      nodes_.setPreceedingNode(oldHead, nodes_.head_);
     }
     size_++;
   }
   void removeFirst(){
     Node<TYPE>* headCopy = nodes_.head_;
-    nodes_.head_ = nodes_.head_->next();
-    nodes_.head_->setPrev(NULL);
+    nodes_.head_ = nodes_.getFollowingNode(nodes_.head_);
+    nodes_.setPreceedingNode(nodes_.head_, NULL);
     delete headCopy;
     size_--;
   }
   void removeLast(){
     Node<TYPE>* tailCopy = nodes_.tail_;
-    nodes_.tail_ = nodes_.tail_->prev();
-    nodes_.tail_->setNext(NULL);
+    nodes_.tail_ = nodes_.getPreceedingNode(nodes_.tail_);
+    nodes_.setFollowingNode(nodes_.tail_, NULL);
     delete tailCopy;
     size_--;
   }
@@ -81,13 +71,10 @@ public:
     return list;
   }
   void reverse(){
-    unsigned nodesToRemove = size_;
-    for(const auto& data : *this){
-      prepend(data);
-    }
-    while(nodesToRemove--){
-      removeLast();
-    }
+    Node<TYPE>* tailCopy = nodes_.tail_;
+    nodes_.tail_ = nodes_.head_;
+    nodes_.head_ = tailCopy;
+    nodes_.reverse();
   }
   bool operator==(const DoublyLinkedList& other) const{
     if(size_ != other.size_){
@@ -98,7 +85,7 @@ public:
       if(data != otherCurrentNode->data()){
         return false;
       }
-      otherCurrentNode = otherCurrentNode->next();
+      otherCurrentNode = other.nodes_.getFollowingNode(otherCurrentNode);
     }
     return true;
   }
@@ -117,22 +104,22 @@ public:
     }
   }
   DataIterator<TYPE> begin() const{
-    return DataIterator<TYPE>(nodes_.head_);
+    return DataIterator<TYPE>(nodes_.head_, nodes_);
   }
   DataIterator<TYPE> end() const{
-    return DataIterator<TYPE>(NULL);
+    return DataIterator<TYPE>(NULL, nodes_);
   }
   ReverseDataIterator<TYPE> rbegin() const{
-    return ReverseDataIterator<TYPE>(nodes_.tail_);
+    return ReverseDataIterator<TYPE>(nodes_.tail_, nodes_);
   }
   ReverseDataIterator<TYPE> rend() const{
-    return ReverseDataIterator<TYPE>(NULL);
+    return ReverseDataIterator<TYPE>(NULL, nodes_);
   }
   friend std::ostream& operator<<(std::ostream& os, const DoublyLinkedList& doublyLinkedList){
     os << "(";
     for(auto node: doublyLinkedList.nodes_){
       os << node->data();
-      if(node->next()){
+      if(doublyLinkedList.nodes_.getFollowingNode(node)){
         os << ",";
       }
     }
@@ -165,13 +152,16 @@ private:
     }else if(nodes_.tail_ == node){
       removeLast();
     }else{
-      node->next()->setPrev(node->prev());
-      node->prev()->setNext(node->next());
+      Node<TYPE>* next = nodes_.getFollowingNode(node);
+      Node<TYPE>* prev = nodes_.getPreceedingNode(node);
+      nodes_.setPreceedingNode(next, prev);
+      nodes_.setFollowingNode(prev, next);
+
       size_--;
       delete node;
     }
   }
-  Nodes nodes_;
+  Nodes<TYPE> nodes_;
   unsigned size_;
 };
 

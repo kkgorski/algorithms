@@ -509,3 +509,32 @@ TEST_CASE("It is possible to concatenate regular and reversed lists", "[operator
     }
   }
 }
+
+TEST_CASE("It is possible to iterate through reversed doublyLinkedList", "[begin, end, Iterator]") {
+  GIVEN("An int list (1,2,3)"){
+
+    std::array<int,3> array = {1,2,3};
+    DoublyLinkedList<int> doublyLinkedList(array);
+    REQUIRE(doublyLinkedList.size() == 3);
+
+    WHEN("Vector is constructed from reversed doublyLinkedList values during for loop"){
+
+      doublyLinkedList.reverse();
+      std::vector<int> result = {};
+
+      for(int it : doublyLinkedList){
+        it++;
+      }
+      for(int it : doublyLinkedList){
+        result.emplace_back(it);
+      }
+
+      THEN("Resulting vector is 3,2,1"){
+
+        std::vector<int> expectedVector = {3,2,1};
+        REQUIRE(result == expectedVector);
+
+      }
+    }
+  }
+}

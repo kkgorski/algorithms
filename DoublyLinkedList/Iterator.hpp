@@ -4,20 +4,20 @@
 #include "Nodes.hpp"
 
 template<typename TYPE>
-class Nodes;
+class ITraverser;
 
 template<typename TYPE>
 class Iterator{
 public:
-  explicit Iterator(Node<TYPE>* currentNode, const Nodes<TYPE>& nodes) : currentNode_(currentNode), nodes_(nodes){
+  explicit Iterator(Node<TYPE>* currentNode, ITraverser<TYPE>* const & traverser) : currentNode_(currentNode), traverser_(traverser){
     if(currentNode_){
-      nextNode_ = nodes_.getFollowingNode(currentNode_);
+      nextNode_ = traverser_->getFollowingNode(currentNode_);
     }
   }
   Iterator& operator++(){
     currentNode_ = nextNode_;
     if(nextNode_){
-      nextNode_ = nodes_.getFollowingNode(nextNode_);
+      nextNode_ = traverser_->getFollowingNode(nextNode_);
     }
     return *this;
   }
@@ -33,21 +33,21 @@ public:
 protected:
   Node<TYPE>* currentNode_;
   Node<TYPE>* nextNode_;
-  const Nodes<TYPE>& nodes_;
+  ITraverser<TYPE>* const & traverser_;
 };
 
 template<typename TYPE>
 class ReverseIterator{
 public:
-  explicit ReverseIterator(Node<TYPE>* currentNode, const Nodes<TYPE>& nodes) : currentNode_(currentNode), nodes_(nodes){
+  explicit ReverseIterator(Node<TYPE>* currentNode, ITraverser<TYPE>* const & traverser) : currentNode_(currentNode), traverser_(traverser){
     if(currentNode_){
-      prevNode_ = nodes_.getPreceedingNode(currentNode_);
+      prevNode_ = traverser_->getPreceedingNode(currentNode_);
     }
   }
   ReverseIterator& operator++(){
     currentNode_ = prevNode_;
     if(prevNode_){
-      prevNode_ = nodes_.getPreceedingNode(prevNode_);
+      prevNode_ = traverser_->getPreceedingNode(prevNode_);
     }
     return *this;
   }
@@ -63,13 +63,13 @@ public:
 protected:
   Node<TYPE>* currentNode_;
   Node<TYPE>* prevNode_;
-  const Nodes<TYPE>& nodes_;
+  ITraverser<TYPE>* const & traverser_;
 };
 
 template<typename TYPE>
 class DataIterator : public Iterator<TYPE>{
 public:
-  explicit DataIterator(Node<TYPE>* currentNode, const Nodes<TYPE>& nodes) : Iterator<TYPE>(currentNode, nodes) {}
+  explicit DataIterator(Node<TYPE>* currentNode, ITraverser<TYPE>* const & traverser) : Iterator<TYPE>(currentNode, traverser) {}
   TYPE operator*() const{
     return this->currentNode_->data();
   }
@@ -81,7 +81,7 @@ public:
 template<typename TYPE>
 class NodeIterator : public Iterator<TYPE>{
 public:
-  explicit NodeIterator(Node<TYPE>* currentNode, const Nodes<TYPE>& nodes) : Iterator<TYPE>(currentNode, nodes) {}
+  explicit NodeIterator(Node<TYPE>* currentNode, ITraverser<TYPE>* const & traverser) : Iterator<TYPE>(currentNode, traverser) {}
   Node<TYPE>* operator*(){
     return this->currentNode_;
   }
@@ -90,7 +90,7 @@ public:
 template<typename TYPE>
 class ReverseDataIterator : public ReverseIterator<TYPE>{
 public:
-  explicit ReverseDataIterator(Node<TYPE>* currentNode, const Nodes<TYPE>& nodes) : ReverseIterator<TYPE>(currentNode, nodes) {}
+  explicit ReverseDataIterator(Node<TYPE>* currentNode, ITraverser<TYPE>* const & traverser) : ReverseIterator<TYPE>(currentNode, traverser) {}
   TYPE operator*() const{
     return this->currentNode_->data();
   }

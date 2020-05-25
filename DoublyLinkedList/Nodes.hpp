@@ -4,71 +4,71 @@
 #include "Iterator.hpp"
 
 template<typename TYPE>
-class Nodes{
-private:
+class ITraverser{
+public:
+  virtual ~ITraverser(){}
+  virtual Node<TYPE>* createNode(TYPE&& data, Node<TYPE>* prev, Node<TYPE>* next) const = 0;
+  virtual Node<TYPE>* getFollowingNode(Node<TYPE>* Node) const = 0;
+  virtual Node<TYPE>* getPreceedingNode(Node<TYPE>* Node) const = 0;
+  virtual void setFollowingNode(Node<TYPE>* current, Node<TYPE>* next) const = 0;
+  virtual void setPreceedingNode(Node<TYPE>* current, Node<TYPE>* prev) const = 0;
+};
 
-  static Node<TYPE>* createNodeRegular(TYPE&& data, Node<TYPE>* prev, Node<TYPE>* next){
+template<typename TYPE>
+class IForwardTraverser : public ITraverser<TYPE>{
+public:
+  virtual ~IForwardTraverser(){}
+  virtual Node<TYPE>* createNode(TYPE&& data, Node<TYPE>* prev, Node<TYPE>* next) const {
     return new Node<TYPE>(std::move(data), prev, next);
   }
-  static Node<TYPE>* getFollowingNodeRegular(Node<TYPE>* node){
+  virtual Node<TYPE>* getFollowingNode(Node<TYPE>* node) const {
     return node->next();
   }
-  static Node<TYPE>* getPreceedingNodeRegular(Node<TYPE>* node){
+  virtual Node<TYPE>* getPreceedingNode(Node<TYPE>* node) const {
     return node->prev();
   }
-  static void setFollowingNodeRegular(Node<TYPE>* current, Node<TYPE>* next){
+  virtual void setFollowingNode(Node<TYPE>* current, Node<TYPE>* next) const {
     current->setNext(next);
   }
-  static void setPreceedingNodeRegular(Node<TYPE>* current, Node<TYPE>* prev){
+  virtual void setPreceedingNode(Node<TYPE>* current, Node<TYPE>* prev) const {
     current->setPrev(prev);
   }
+};
 
-
-  static Node<TYPE>* createNodeReversed(TYPE&& data, Node<TYPE>* prev, Node<TYPE>* next){
+template<typename TYPE>
+class IReverseTraverser : public ITraverser<TYPE>{
+public:
+  virtual ~IReverseTraverser(){}
+  virtual Node<TYPE>* createNode(TYPE&& data, Node<TYPE>* prev, Node<TYPE>* next) const {
     return new Node<TYPE>(std::move(data), next, prev);
   }
-  static Node<TYPE>* getFollowingNodeReversed(Node<TYPE>* node){
+  virtual Node<TYPE>* getFollowingNode(Node<TYPE>* node) const {
     return node->prev();
   }
-  static Node<TYPE>* getPreceedingNodeReversed(Node<TYPE>* node){
+  virtual Node<TYPE>* getPreceedingNode(Node<TYPE>* node) const {
     return node->next();
   }
-  static void setFollowingNodeReversed(Node<TYPE>* current, Node<TYPE>* next){
+  virtual void setFollowingNode(Node<TYPE>* current, Node<TYPE>* next) const {
     current->setPrev(next);
   }
-  static void setPreceedingNodeReversed(Node<TYPE>* current, Node<TYPE>* prev){
+  virtual void setPreceedingNode(Node<TYPE>* current, Node<TYPE>* prev) const {
     current->setNext(prev);
   }
-public:
+};
 
-  Nodes(Node<TYPE>* head, Node<TYPE>* tail):
-    createNode(createNodeRegular),
-    getFollowingNode(getFollowingNodeRegular),
-    getPreceedingNode(getPreceedingNodeRegular),
-    setFollowingNode(setFollowingNodeRegular),
-    setPreceedingNode(setPreceedingNodeRegular),
-    head_(head),
-    tail_(tail) {}
+template<typename TYPE>
+struct Nodes{
+  Nodes(Node<TYPE>* head, Node<TYPE>* tail, ITraverser<TYPE>* const & traverser) : head_(head), tail_(tail), traverser_(traverser) {}
   NodeIterator<TYPE> begin() const{
-    return NodeIterator<TYPE>(head_, *this);
+    return NodeIterator<TYPE>(head_, traverser_);
   }
   NodeIterator<TYPE> end() const{
-    return NodeIterator<TYPE>(NULL, *this);
+    return NodeIterator<TYPE>(NULL, traverser_);
   }
-  void reverse(){
-    createNode = createNodeReversed;
-    getFollowingNode = getFollowingNodeReversed;
-    getPreceedingNode = getPreceedingNodeReversed;
-    setFollowingNode = setFollowingNodeReversed;
-    setPreceedingNode = setPreceedingNodeReversed;
-  }
-
-  Node<TYPE>* (* createNode)(TYPE&& data, Node<TYPE>* prev, Node<TYPE>* next);
-  Node<TYPE>* (* getFollowingNode)(Node<TYPE>* Node);
-  Node<TYPE>* (* getPreceedingNode)(Node<TYPE>* Node);
-  void (* setFollowingNode)(Node<TYPE>* current, Node<TYPE>* next);
-  void (* setPreceedingNode)(Node<TYPE>* current, Node<TYPE>* prev);
 
   Node<TYPE>* head_;
   Node<TYPE>* tail_;
+  private:
+  ITraverser<TYPE>* const & traverser_;
 };
+

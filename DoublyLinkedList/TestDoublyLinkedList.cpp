@@ -421,3 +421,25 @@ TEST_CASE("Items can be removed from the end of doublyLinkedList", "[removeLast]
   }
 }
 
+TEST_CASE("It is possible to concatenate lists", "[operator +]") {
+  GIVEN("Two lists (1,2,3) and (4,5,6)"){
+
+    std::array<int,3> array = {1,2,3};
+    DoublyLinkedList<int> doublyLinkedList(array);
+    std::array<int,3> array2 = {4,5,6};
+    DoublyLinkedList<int> doublyLinkedList2(array2);
+
+    WHEN("the second is added to the first one"){
+
+      DoublyLinkedList<int> result = doublyLinkedList + doublyLinkedList2;
+
+      THEN("The result is a list(1,2,3,4,5,6)"){
+        std::array<int,6> array = {1,2,3,4,5,6};
+        DoublyLinkedList<int> expectedDoublyLinkedList(array);
+
+        REQUIRE(expectedDoublyLinkedList == result);
+      }
+    }
+  }
+}
+

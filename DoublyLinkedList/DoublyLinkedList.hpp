@@ -23,6 +23,9 @@ public:
     }
     delete traverser_;
   }
+  DoublyLinkedList operator+(const DoublyLinkedList& r) const{
+    return r;
+  }
   unsigned size() const{
     return size_;
   }

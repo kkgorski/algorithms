@@ -24,7 +24,14 @@ public:
     delete traverser_;
   }
   DoublyLinkedList operator+(const DoublyLinkedList& r) const{
-    return r;
+    DoublyLinkedList list ;
+    for(const auto& data : *this){
+      list.append(data);
+    }
+    for(const auto& data : r){
+      list.append(data);
+    }
+    return list;
   }
   unsigned size() const{
     return size_;
@@ -41,7 +48,15 @@ public:
     size_++;
   }
   void append(TYPE item){
-    (void) item;
+    if(0 == size_){
+      nodes_.head_ = traverser_->createNode(std::move(item), NULL, NULL);
+      nodes_.tail_ = nodes_.head_;
+    }else{
+      Node<TYPE>* oldTail = nodes_.tail_;
+      nodes_.tail_ = traverser_->createNode(std::move(item), nodes_.tail_, NULL);
+      traverser_->setFollowingNode(oldTail, nodes_.tail_);
+    }
+    size_++;
   }
   void emplaceFront(TYPE&& item){
     if(0 == size_){
@@ -72,7 +87,7 @@ public:
     return nodes_.head_->data;
   }
   TYPE& back() const{
-    return nodes_.head_->data;
+    return nodes_.tail_->data;
   }
   DoublyLinkedList makeReversed() const{
     DoublyLinkedList list;

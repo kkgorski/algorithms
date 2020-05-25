@@ -177,6 +177,28 @@ TEST_CASE("DoublyLinkedList can be reversed in place", "[reverse]") {
   }
 }
 
+TEST_CASE("DoublyLinkedList can be reversed in place twice", "[reverse]") {
+  GIVEN("An list(1,2,3)"){
+
+    std::array<int,3> array = {1,2,3};
+    DoublyLinkedList<int> doublyLinkedList(array);
+    REQUIRE(doublyLinkedList.size() == 3);
+
+    WHEN("DoublyLinkedList is reversed"){
+
+      doublyLinkedList.reverse();
+      doublyLinkedList.reverse();
+
+      THEN("The result is a list(1,2,3)"){
+
+        std::array<int,3> array = {1,2,3};
+        DoublyLinkedList<int> expectedList(array);
+        REQUIRE(doublyLinkedList.size() == 3);
+        REQUIRE(doublyLinkedList == expectedList);
+      }
+    }
+  }
+}
 TEST_CASE("DoublyLinkedList can be iterated", "[forEach]") {
   GIVEN("An list(1,2,3)"){
 

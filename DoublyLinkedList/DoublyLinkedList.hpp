@@ -40,6 +40,9 @@ public:
     }
     size_++;
   }
+  void append(TYPE item){
+    (void) item;
+  }
   void emplaceFront(TYPE&& item){
     if(0 == size_){
       nodes_.head_ = traverser_->createNode(std::move(item), NULL, NULL);
@@ -66,6 +69,9 @@ public:
     size_--;
   }
   TYPE& front() const{
+    return nodes_.head_->data;
+  }
+  TYPE& back() const{
     return nodes_.head_->data;
   }
   DoublyLinkedList makeReversed() const{

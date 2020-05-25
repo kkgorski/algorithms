@@ -443,3 +443,25 @@ TEST_CASE("It is possible to concatenate lists", "[operator +]") {
   }
 }
 
+TEST_CASE("Items can be added to the end of doublyLinkedList", "[append]") {
+  GIVEN("An empty int list"){
+
+    DoublyLinkedList<int> doublyLinkedList;
+    REQUIRE(doublyLinkedList.size() == 0);
+
+    WHEN("int 2 is prepended"){
+
+      doublyLinkedList.append(2);
+      doublyLinkedList.append(3);
+      doublyLinkedList.append(4);
+
+      THEN("List size is 3 front returns 2, and back returns 4"){
+
+        REQUIRE(doublyLinkedList.size() == 1);
+        REQUIRE(doublyLinkedList.front() == 2);
+        REQUIRE(doublyLinkedList.back() == 4);
+      }
+    }
+  }
+}
+

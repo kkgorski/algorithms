@@ -2,6 +2,7 @@
 
 #include "Node.hpp"
 #include "Nodes.hpp"
+#include "Traverser.hpp"
 #include "utils.hpp"
 #include "Iterator.hpp"
 

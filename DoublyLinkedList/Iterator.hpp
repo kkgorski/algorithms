@@ -2,9 +2,7 @@
 
 #include "Node.hpp"
 #include "Nodes.hpp"
-
-template<typename TYPE>
-class ITraverser;
+#include "Traverser.hpp"
 
 template<typename TYPE>
 class Iterator{

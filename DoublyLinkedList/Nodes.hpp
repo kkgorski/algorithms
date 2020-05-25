@@ -22,16 +22,16 @@ public:
     return new Node<TYPE>(std::move(data), prev, next);
   }
   virtual Node<TYPE>* getFollowingNode(Node<TYPE>* node) const {
-    return node->next();
+    return node->next;
   }
   virtual Node<TYPE>* getPreceedingNode(Node<TYPE>* node) const {
-    return node->prev();
+    return node->prev;
   }
   virtual void setFollowingNode(Node<TYPE>* current, Node<TYPE>* next) const {
-    current->setNext(next);
+    current->next = next;
   }
   virtual void setPreceedingNode(Node<TYPE>* current, Node<TYPE>* prev) const {
-    current->setPrev(prev);
+    current->prev = prev;
   }
 };
 
@@ -43,16 +43,16 @@ public:
     return new Node<TYPE>(std::move(data), next, prev);
   }
   virtual Node<TYPE>* getFollowingNode(Node<TYPE>* node) const {
-    return node->prev();
+    return node->prev;
   }
   virtual Node<TYPE>* getPreceedingNode(Node<TYPE>* node) const {
-    return node->next();
+    return node->next;
   }
   virtual void setFollowingNode(Node<TYPE>* current, Node<TYPE>* next) const {
-    current->setPrev(next);
+    current->prev = next;
   }
   virtual void setPreceedingNode(Node<TYPE>* current, Node<TYPE>* prev) const {
-    current->setNext(prev);
+    current->next = prev;
   }
 };
 

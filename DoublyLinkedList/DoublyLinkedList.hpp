@@ -62,7 +62,7 @@ public:
     size_--;
   }
   TYPE& front() const{
-    return nodes_.head_->data();
+    return nodes_.head_->data;
   }
   DoublyLinkedList makeReversed() const{
     DoublyLinkedList list;
@@ -84,7 +84,7 @@ public:
     }
     Node<TYPE>* otherCurrentNode = other.nodes_.head_;
     for(const auto& data : *this){
-      if(data != otherCurrentNode->data()){
+      if(data != otherCurrentNode->data){
         return false;
       }
       otherCurrentNode = other.traverser_->getFollowingNode(otherCurrentNode);
@@ -94,13 +94,13 @@ public:
   template<typename functionType>
   void forEach(functionType function){
     for(auto node: nodes_){
-      function(node->data());
+      function(node->data);
     }
   }
   template<typename functionType>
   void removeIf(functionType function){
     for(auto node: nodes_){
-      if(function(node->data())){
+      if(function(node->data)){
         removeNode(node);
       }
     }
@@ -120,7 +120,7 @@ public:
   friend std::ostream& operator<<(std::ostream& os, const DoublyLinkedList& doublyLinkedList){
     os << "(";
     for(auto node: doublyLinkedList.nodes_){
-      os << node->data();
+      os << node->data;
       if(doublyLinkedList.traverser_->getFollowingNode(node)){
         os << ",";
       }

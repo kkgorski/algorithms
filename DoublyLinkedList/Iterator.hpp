@@ -71,10 +71,10 @@ class DataIterator : public Iterator<TYPE>{
 public:
   explicit DataIterator(Node<TYPE>* currentNode, ITraverser<TYPE>* const & traverser) : Iterator<TYPE>(currentNode, traverser) {}
   TYPE operator*() const{
-    return this->currentNode_->data();
+    return this->currentNode_->data;
   }
   TYPE& operator*(){
-    return this->currentNode_->data();
+    return this->currentNode_->data;
   }
 };
 
@@ -92,10 +92,10 @@ class ReverseDataIterator : public ReverseIterator<TYPE>{
 public:
   explicit ReverseDataIterator(Node<TYPE>* currentNode, ITraverser<TYPE>* const & traverser) : ReverseIterator<TYPE>(currentNode, traverser) {}
   TYPE operator*() const{
-    return this->currentNode_->data();
+    return this->currentNode_->data;
   }
   TYPE& operator*(){
-    return this->currentNode_->data();
+    return this->currentNode_->data;
   }
 };
 

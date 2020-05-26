@@ -33,8 +33,8 @@ public:
     }
     return list;
   }
-  void unify(DoublyLinkedList&& r){
-    for(const auto& data : r){
+  void unify(DoublyLinkedList&& r){ //TODO add const time implementation. r passed here will be destroyed,
+    for(const auto& data : r){      //     so probably the best solution would be to use smart pointers for nodes.
       append(data);
     }
   }

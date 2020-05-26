@@ -539,7 +539,7 @@ TEST_CASE("It is possible to iterate through reversed doublyLinkedList", "[begin
   }
 }
 
-TEST_CASE("It is possible to make union of lists in constant time", "[unify]") {
+TEST_CASE("It is possible to make union of lists in constant time", "[unify]") { //TODO current implementation is non-constant time
   GIVEN("Two int lists: (1,2,3) and (5,6,7)"){
 
     std::array<int,3> array = {1,2,3};

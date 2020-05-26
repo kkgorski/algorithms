@@ -538,3 +538,28 @@ TEST_CASE("It is possible to iterate through reversed doublyLinkedList", "[begin
     }
   }
 }
+
+TEST_CASE("It is possible to make union of lists in constant time", "[unify]") {
+  GIVEN("Two int lists: (1,2,3) and (5,6,7)"){
+
+    std::array<int,3> array = {1,2,3};
+    DoublyLinkedList<int> doublyLinkedList(array);
+    REQUIRE(doublyLinkedList.size() == 3);
+    std::array<int,3> array2 = {5,6,7};
+    DoublyLinkedList<int> doublyLinkedList2(array2);
+    REQUIRE(doublyLinkedList.size() == 3);
+
+    WHEN("These lists are unified"){
+
+      doublyLinkedList.unify(std::move(doublyLinkedList2));
+
+      THEN("Resulting list is (1,2,3,5,6,7)"){
+
+				std::array<int,6> array3 = {1,2,3,5,6,7};
+				DoublyLinkedList<int> result(array3);
+        REQUIRE(result == doublyLinkedList);
+
+      }
+    }
+  }
+}

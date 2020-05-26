@@ -33,6 +33,9 @@ public:
     }
     return list;
   }
+  void unify(DoublyLinkedList&& r){
+    (void) r;
+  }
   unsigned size() const{
     return size_;
   }

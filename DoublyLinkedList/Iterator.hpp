@@ -7,7 +7,7 @@
 template<typename TYPE>
 class Iterator{
 public:
-  explicit Iterator(Node<TYPE>* currentNode, ITraverser<TYPE>* const & traverser) : currentNode_(currentNode), traverser_(traverser){
+  explicit Iterator(Node<TYPE>* currentNode, ITraverser<TYPE>* traverser) : currentNode_(currentNode), traverser_(traverser){
     if(currentNode_){
       nextNode_ = traverser_->getFollowingNode(currentNode_);
     }
@@ -31,13 +31,13 @@ public:
 protected:
   Node<TYPE>* currentNode_;
   Node<TYPE>* nextNode_;
-  ITraverser<TYPE>* const & traverser_;
+  ITraverser<TYPE>* traverser_;
 };
 
 template<typename TYPE>
 class ReverseIterator{
 public:
-  explicit ReverseIterator(Node<TYPE>* currentNode, ITraverser<TYPE>* const & traverser) : currentNode_(currentNode), traverser_(traverser){
+  explicit ReverseIterator(Node<TYPE>* currentNode, ITraverser<TYPE>* traverser) : currentNode_(currentNode), traverser_(traverser){
     if(currentNode_){
       prevNode_ = traverser_->getPreceedingNode(currentNode_);
     }
@@ -61,13 +61,13 @@ public:
 protected:
   Node<TYPE>* currentNode_;
   Node<TYPE>* prevNode_;
-  ITraverser<TYPE>* const & traverser_;
+  ITraverser<TYPE>* traverser_;
 };
 
 template<typename TYPE>
 class DataIterator : public Iterator<TYPE>{
 public:
-  explicit DataIterator(Node<TYPE>* currentNode, ITraverser<TYPE>* const & traverser) : Iterator<TYPE>(currentNode, traverser) {}
+  explicit DataIterator(Node<TYPE>* currentNode, ITraverser<TYPE>* traverser) : Iterator<TYPE>(currentNode, traverser) {}
   TYPE operator*() const{
     return this->currentNode_->data;
   }
@@ -79,7 +79,7 @@ public:
 template<typename TYPE>
 class NodeIterator : public Iterator<TYPE>{
 public:
-  explicit NodeIterator(Node<TYPE>* currentNode, ITraverser<TYPE>* const & traverser) : Iterator<TYPE>(currentNode, traverser) {}
+  explicit NodeIterator(Node<TYPE>* currentNode, ITraverser<TYPE>* traverser) : Iterator<TYPE>(currentNode, traverser) {}
   Node<TYPE>* operator*(){
     return this->currentNode_;
   }
@@ -88,7 +88,7 @@ public:
 template<typename TYPE>
 class ReverseDataIterator : public ReverseIterator<TYPE>{
 public:
-  explicit ReverseDataIterator(Node<TYPE>* currentNode, ITraverser<TYPE>* const & traverser) : ReverseIterator<TYPE>(currentNode, traverser) {}
+  explicit ReverseDataIterator(Node<TYPE>* currentNode, ITraverser<TYPE>* traverser) : ReverseIterator<TYPE>(currentNode, traverser) {}
   TYPE operator*() const{
     return this->currentNode_->data;
   }

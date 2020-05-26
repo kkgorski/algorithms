@@ -34,7 +34,9 @@ public:
     return list;
   }
   void unify(DoublyLinkedList&& r){
-    (void) r;
+    for(const auto& data : r){
+      append(data);
+    }
   }
   unsigned size() const{
     return size_;

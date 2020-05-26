@@ -557,6 +557,7 @@ TEST_CASE("It is possible to make union of lists in constant time", "[unify]") {
 
 				std::array<int,6> array3 = {1,2,3,5,6,7};
 				DoublyLinkedList<int> result(array3);
+        REQUIRE(doublyLinkedList.size() == 6);
         REQUIRE(result == doublyLinkedList);
 
       }

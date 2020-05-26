@@ -100,8 +100,13 @@ public:
     Node<TYPE>* tailCopy = nodes_.tail_;
     nodes_.tail_ = nodes_.head_;
     nodes_.head_ = tailCopy;
-    delete traverser_;
-    traverser_ = new IReverseTraverser<TYPE>();
+    if(typeid(*traverser_) == typeid(IForwardTraverser<TYPE>)){
+      delete traverser_;
+      traverser_ = new IReverseTraverser<TYPE>();
+    }else{
+      delete traverser_;
+      traverser_ = new IForwardTraverser<TYPE>();
+    }
   }
   bool operator==(const DoublyLinkedList& other) const{
     if(size_ != other.size_){

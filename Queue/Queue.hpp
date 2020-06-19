@@ -8,8 +8,14 @@ public:
   void push(TYPE item){
     list.prepend(item);
   }
+  void pop(){
+    list.removeLast();
+  }
   TYPE front() const{
     return list.front();
+  }
+  TYPE back() const{
+    return list.back();
   }
   unsigned size() const{
     return list.size();
